@@ -1,6 +1,8 @@
 [Create new cloudflare page](https://dash.cloudflare.com/781f2601c68594125b6b97567364d0d6/pages/new/provider/github)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+# Step 1
+
+Remember to change .env variables!
 
 ## 🚀 Project Structure
 
