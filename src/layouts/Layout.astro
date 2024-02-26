@@ -2,6 +2,7 @@
 ---
 const { title, route } = Astro.props;
 import { ViewTransitions } from 'astro:transitions';
+import Hotkeys from "../components/Hotkeys.jsx"
 ---
 
 <html lang="en">
@@ -15,6 +16,7 @@ import { ViewTransitions } from 'astro:transitions';
 		<!-- <meta name="description" content={description} /> -->
 	</head>
 	<body>
+		<Hotkeys client:load/>
 		<div class="page">
 			<nav>
 				<a href="/" class="logo">
@@ -27,7 +29,7 @@ import { ViewTransitions } from 'astro:transitions';
 			</main>
 			<footer>
 				<!-- PERSIST STATE -->
-				<video controls="" autoplay="" transition:persist>
+				<video controls="" autoplay="true" playsinline transition:persist muted>
 					<source src="https://ia804502.us.archive.org/33/items/GoldenGa1939_3/GoldenGa1939_3_512kb.mp4" type="video/mp4">
 				</video>
 				Video with persisted state

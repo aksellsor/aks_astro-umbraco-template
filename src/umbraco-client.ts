@@ -1,7 +1,6 @@
 import { getSortParam, getExpandParam } from './utils';
 import type { Sort, Expand } from './utils';
 const UMBRACO_URL = import.meta.env.UMBRACO_URL;
-
 class UmbracoClient {
   private deliveryApiPath = '/umbraco/delivery/api/v1/content';
   private deliveryApiUrl: string;
