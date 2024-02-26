@@ -1,3 +1,4 @@
+const IMAGE_CDN = import.meta.env.IMAGE_CDN;
 export type Sort = {
   type: 'createDate' | 'updateDate' | 'sortOrder' | 'name' | 'level';
   order?: 'asc' | 'desc';
@@ -27,4 +28,9 @@ function getExpandParam(expand: Expand) {
   return expandParam;
 }
 
-export { getSortParam, getExpandParam };
+function getUmbracoImage(image) {
+  if (!image) return;
+  const { url } = image[0];
+  return `${IMAGE_CDN}${url}`;
+}
+export { getSortParam, getExpandParam, getUmbracoImage };

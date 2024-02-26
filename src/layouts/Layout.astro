@@ -1,6 +1,7 @@
 
 ---
-const { title, description } = Astro.props;
+const { title, route } = Astro.props;
+import { ViewTransitions } from 'astro:transitions';
 ---
 
 <html lang="en">
@@ -10,19 +11,84 @@ const { title, description } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-    <meta name="description" content={description} />
+		<ViewTransitions />
+		<!-- <meta name="description" content={description} /> -->
 	</head>
 	<body>
-		<slot />
+		<div class="page">
+			<nav>
+				<a href="/" class="logo">
+					LOGO
+				</a>
+			</nav>
+			<main>
+				<div class="crumbs">{route.path.split("/").slice(0,-1)?.map(p => <a href={`/${p}`}>{p ==="" ? "H": p.replace(/-/g," ")}</a>)}</div>
+				<slot />
+			</main>
+			<footer>
+				<!-- PERSIST STATE -->
+				<video controls="" autoplay="" transition:persist>
+					<source src="https://ia804502.us.archive.org/33/items/GoldenGa1939_3/GoldenGa1939_3_512kb.mp4" type="video/mp4">
+				</video>
+				Video with persisted state
+			</footer>
+		</div>
 	</body>
 </html>
 
+<!-- BREADCRUMBS -->
 <style>
-  html {
+    .crumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .25rem;
+    }
+    .crumbs a::first-letter {text-transform: capitalize;}
+    .crumbs a {
+        padding: .5em;
+        background-color: rgba(255,255,255,0.1);
+        text-decoration-color: rgba(255,255,255,0.3);
+    }
+    .crumbs a:hover {
+        display: inline-block;
+        text-decoration-color: rgba(255,255,255,1);
+    }
+</style>
+
+<!-- PAGE LAYOUT -->
+<style>
+	html,body,.page {height:100%;}
+	.page{display:flex;flex-direction: column;justify-content: space-between;}
+	footer {
+		margin-top: auto;
+		padding:1rem 0;
+		display: flex;
+		align-items: center;
+		gap: 3rem;
+	}
+    .logo {
+		display: block;
+		color: inherit;
+		text-decoration: none;
+		padding:1rem 0;
+	}
+	
+</style>
+
+<!-- GLOBAL -->
+
+<style is:global>
+    h1 {
+        color: rgb(58, 206, 38);
+    }
+	a {
+		color: inherit;
+		text-underline-offset: .3em;
+	}
+  	html {
 		font-family: system-ui, sans-serif;
 		background: #13151a;
 	}
-
 	body {
 		margin: auto;
 		padding: 0 1rem;

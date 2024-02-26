@@ -1,5 +1,6 @@
 import { getSortParam, getExpandParam } from './utils';
 import type { Sort, Expand } from './utils';
+const UMBRACO_URL = import.meta.env.UMBRACO_URL;
 
 class UmbracoClient {
   private deliveryApiPath = '/umbraco/delivery/api/v1/content';
@@ -33,4 +34,4 @@ class UmbracoClient {
   }
 }
 
-export default new UmbracoClient('https://1235738-www.web.tornado-node.net');
+export default new UmbracoClient(UMBRACO_URL);
