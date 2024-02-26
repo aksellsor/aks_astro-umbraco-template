@@ -4,7 +4,6 @@ const { name, path, id } = Astro.props;
 import { ViewTransitions } from 'astro:transitions';
 import Hotkeys from "../dev/Hotkeys.jsx"
 import CMDK from '../dev/CMDK-wrapper.astro';
-
 ---
 
 <html lang="en">
@@ -15,7 +14,7 @@ import CMDK from '../dev/CMDK-wrapper.astro';
 		<meta name="generator" content={Astro.generator} />
 		<title>{name}</title>
 		<ViewTransitions />
-		<!-- <meta name="description" content={description} /> -->
+		<meta name="description" content="This is the SEO description of Astro template" />
 	</head>
 	<body transition:animate="none">
 		<CMDK/>
