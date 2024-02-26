@@ -1,12 +1,14 @@
 import react from '@astrojs/react';
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
   prefetch: {
     defaultStrategy: 'hover', // 'tap'
   },
-  integrations: [react()],
+  site: 'https://aks-astro-webhooks.pages.dev/',
+  integrations: [react(), sitemap()],
 });
 
 // SSR
