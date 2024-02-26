@@ -1,0 +1,10 @@
+---
+	import Layout from '../layouts/Layout.astro';
+	import client from '../umbraco-client';
+	import CMDK from "./CMDK.jsx"
+	const page = await client.getContentById('b88184e3-f5ed-49fa-a30f-27c8f694773e').then(res => res);
+	const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }});
+	
+	const allRoutes = [page,...pages];
+---
+<CMDK client:only routes={allRoutes}/>

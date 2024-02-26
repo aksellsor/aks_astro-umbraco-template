@@ -1,8 +1,9 @@
 
 ---
-const { title, route } = Astro.props;
+const { title, path, id } = Astro.props;
 import { ViewTransitions } from 'astro:transitions';
 import Hotkeys from "../components/Hotkeys.jsx"
+import CMDK from '../components/CMDK-wrapper.astro';
 ---
 
 <html lang="en">
@@ -16,7 +17,8 @@ import Hotkeys from "../components/Hotkeys.jsx"
 		<!-- <meta name="description" content={description} /> -->
 	</head>
 	<body>
-		<Hotkeys client:load/>
+		<CMDK/>
+		<Hotkeys client:load currentId={id}/>
 		<div class="page">
 			<nav>
 				<a href="/" class="logo">
@@ -24,7 +26,7 @@ import Hotkeys from "../components/Hotkeys.jsx"
 				</a>
 			</nav>
 			<main>
-				<div class="crumbs">{route.path.split("/").slice(0,-1)?.map(p => <a href={`/${p}`}>{p ==="" ? "H": p.replace(/-/g," ")}</a>)}</div>
+				<div class="crumbs">{path.split("/").slice(0,-1)?.map(p => <a href={`/${p}`}>{p ==="" ? "H": p.replace(/-/g," ")}</a>)}</div>
 				<slot />
 			</main>
 			<footer>

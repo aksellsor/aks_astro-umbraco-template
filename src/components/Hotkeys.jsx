@@ -6,7 +6,7 @@ const REPO = import.meta.env.PUBLIC_GITHUB_REPO;
 const UMBRACO = import.meta.env.PUBLIC_UMBRACO_URL;
 const CLOUDFLARE_DASH = import.meta.env.PUBLIC_CLOUDFLARE_DASH;
 
-const AllHotkeys = () => {
+const AllHotkeys = ({ currentId }) => {
     const openUrl = (url) => {
         window
             .open(
@@ -16,7 +16,9 @@ const AllHotkeys = () => {
             .focus();
     };
     useHotkeys('alt+shift+g', () => openUrl(REPO));
-    useHotkeys('alt+shift+u', () => openUrl(UMBRACO));
+    useHotkeys('alt+shift+u', () => {
+        openUrl(`${UMBRACO}#/content/content/edit/${currentId}`);
+    });
     useHotkeys('alt+shift+c', () => openUrl(CLOUDFLARE_DASH));
 };
 

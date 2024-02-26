@@ -21,10 +21,10 @@ export async function getStaticPaths() {
 	
 }
 
-const { contentType, route, name } = Astro.props;
+const { contentType, route, name, id } = Astro.props;
 ---
 
-<Layout {name} {route}>
+<Layout {name} path={route.path} {id}>
 	{
 		() => {
 			switch(contentType) {
