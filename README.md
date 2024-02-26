@@ -2,7 +2,8 @@
 
 1. [Remember to change .env variables!](./.env)
 2. [Add repo to Cloudflare pages](https://dash.cloudflare.com/781f2601c68594125b6b97567364d0d6/pages/new/provider/github)
-3. Add webhook from Cloudflare to Umbraco 13 webhooks
+3. [Add webhook from Cloudflare to Umbraco 13 webhooks](https://docs.umbraco.com/umbraco-cms/reference/webhooks)
+4. Remember to change "site" variable in [astro.config.mjs](./astro.config.mjs) for correct sitemap and robots.txt generation on build
 
 ![alt text](./pagespeed.jpg)
 
