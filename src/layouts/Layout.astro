@@ -2,8 +2,8 @@
 ---
 const { title, path, id } = Astro.props;
 import { ViewTransitions } from 'astro:transitions';
-import Hotkeys from "../components/Hotkeys.jsx"
-import CMDK from '../components/CMDK-wrapper.astro';
+import Hotkeys from "../dev/Hotkeys.jsx"
+import CMDK from '../dev/CMDK-wrapper.astro';
 ---
 
 <html lang="en">
@@ -20,7 +20,7 @@ import CMDK from '../components/CMDK-wrapper.astro';
 		<CMDK/>
 		<Hotkeys client:load currentId={id}/>
 		<div class="page">
-			<nav>
+			<nav transition:animate="none">
 				<a href="/" class="logo">
 					LOGO
 				</a>
