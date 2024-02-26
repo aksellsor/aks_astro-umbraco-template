@@ -1,0 +1,65 @@
+---
+import Layout from "../layouts/Layout.astro";
+import client from '../umbraco-client';
+
+import Page from '../components/Page.jsx';
+import News from '../components/News.astro';
+
+export async function getStaticPaths() {
+	const page = await client.getContentByType('page');
+	const news = await client.getContentByType('news');
+	console.log([...page, ...news].map((page) => {
+		return {
+		params: { slug:page.route.path },
+		props: page.properties,
+		};
+	}));
+// const pages = [
+//     {
+//       slug: undefined,
+//       title: "Astro Store",
+//       text: "Welcome to the Astro store!",
+//     },
+//     {
+//       slug: "products",
+//       title: "Astro products",
+//       text: "We have lots of products for you",
+//     },
+//     {
+//       slug: "products/astro-handbook",
+//       title: "The ultimate Astro handbook",
+//       text: "If you want to learn Astro, you must read this book.",
+//     },
+//   ];
+  
+//   return pages.map(({ slug, title, text }) => {
+//     return {
+//       params: { slug },
+//       props: { title, text },
+//     };
+//   });
+	return [...page, ...news].map((page) => ({
+		params: { slug: page.route.path.replace(/^\/|\/$/,"") },
+		props: page
+	}))
+	
+}
+
+// const { name } = Astro.props;
+---
+
+<Layout >
+	{
+		() => {
+			let type = Astro.props.contentType
+			switch(type) {
+				case "news":
+					return <News props={Astro.props}/>
+				case "page":
+					return <Page props={Astro.props} client:load/>
+				default:
+					return null
+			}
+		}
+	}
+</Layout>

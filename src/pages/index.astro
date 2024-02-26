@@ -4,7 +4,10 @@
 
 	const { name } = await client.getContentById('b88184e3-f5ed-49fa-a30f-27c8f694773e').then(res => res);
 	const { title, description } = await client.getContentById('b88184e3-f5ed-49fa-a30f-27c8f694773e').then(res => res.properties);
-	// const blogPosts = await client.getContentByType('blogPost', { sort: { type: 'createDate', order: 'asc' }})
+	const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }})
+	const newsposts = await client.getContentByType('news', { sort: { type: 'createDate', order: 'asc' }})
+
+	const allRoutes = [...pages,...newsposts];
 // 1063
 // b88184e3-f5ed-49fa-a30f-27c8f694773e
 	function getUmbracoImage(image) {
@@ -19,11 +22,12 @@
 	<h1>{title}</h1>
 	<p>{description}</p>
 	<div class="card-grid">
-		<!-- {blogPosts.map(post => {
+		{allRoutes.map(post => {
 			const { title, description, image } = post.properties;
 			const { path } = post.route
 			return (
-				<a href={`/blog${path}`} class="card">
+				<a href={`${path}`} class="card">
+					{post.route.path}
 					<img src={getUmbracoImage(image)} alt="" class="card-image" />
 					<div class="card-content">
 						<h2>{title}</h2>
@@ -31,7 +35,7 @@
 					</div>
 				</a>
 			);
-		})} -->
+		})}
 	</div>
 </Layout>
 
