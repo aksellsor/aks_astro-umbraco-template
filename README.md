@@ -4,6 +4,8 @@
 2. [Add repo to Cloudflare pages](https://dash.cloudflare.com/781f2601c68594125b6b97567364d0d6/pages/new/provider/github)
 3. Add webhook from Cloudflare to Umbraco 13 webhooks
 
+![alt text](./pagespeed.jpg)
+
 ## 🚀 Project Structure
 
 Inside of your Astro project, you'll see the following folders and files:
