@@ -9,6 +9,7 @@ const Page = ({props}) => {
             <button onClick={() => {
                setNum(n => n+1)
             }}>Increment</button>
+            <img src={"https://1235738-www.web.tornado-node.net/"+props.properties.pageBg[0]?.url}/>
         </div>
     );
 };
