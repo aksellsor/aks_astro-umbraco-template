@@ -3,42 +3,8 @@
 	import client from '../umbraco-client';
 	const UMBRACO_ROOT_NODE = import.meta.env.UMBRACO_ROOT_NODE;
 	const { name, route, id } = await client.getContentById(UMBRACO_ROOT_NODE).then(res => res);
-	const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }});
-	
-	const allRoutes = [...pages];
 ---
 
 <Layout {name} path={route.path} {id}>
-	<h1>{name}</h1>
-	<div class="links">
-		{allRoutes.map(post => {
-			// const { title, description, image } = post.properties;
-			const { path } = post.route
-			return (
-				<a
-					href={`${path}`}
-					class="link"
-					// data-astro-prefetch="tap"
-					// data-astro-prefetch="hover"
-				>
-					{post.route.path}
-				</a>
-			);
-		})}
-	</div>
+	<center><h1>{name}</h1></center>
 </Layout>
-
-<style>
-	.links {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-		grid-gap: 1rem;
-	}
-
-	.link {
-		background: white;
-		color: #13151a;opacity:0.7;
-		text-decoration: none;padding:1rem;border-radius: .2rem;
-	}
-	.link:hover {opacity:1}
-</style>
