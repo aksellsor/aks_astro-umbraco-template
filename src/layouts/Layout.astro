@@ -1,7 +1,6 @@
 
 ---
 const { name, path, id } = Astro.props;
-import { ViewTransitions } from 'astro:transitions';
 import Hotkeys from "../dev/Hotkeys.jsx"
 import CMDK from '../dev/CMDK-wrapper.astro';
 const description = "This is a description placeholder for this website.";
@@ -17,7 +16,6 @@ import Crumbs from "../components/Crumbs.astro"
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
   		<link rel="sitemap" href="/sitemap-index.xml" />
-		<ViewTransitions />
 		<!-- SEO -->
 		<title>{name}</title>
 		<meta name="description" content={description}>
@@ -35,7 +33,7 @@ import Crumbs from "../components/Crumbs.astro"
 		<meta name="twitter:image" content={ogImage}>
 
 	</head>
-	<body transition:animate="none">
+	<body >
 		<CMDK/>
 		<Hotkeys client:load currentId={id}/>
 		<div class="page">
@@ -45,11 +43,6 @@ import Crumbs from "../components/Crumbs.astro"
 				<slot />
 			</main>
 			<footer>
-				<!-- PERSIST STATE -->
-				<video controls="" autoplay="true" playsinline transition:persist muted>
-					<source src="https://ia804502.us.archive.org/33/items/GoldenGa1939_3/GoldenGa1939_3_512kb.mp4" type="video/mp4">
-				</video>
-				Video with persisted state
 			</footer>
 		</div>
 	</body>
