@@ -20,3 +20,4 @@ pnpm-debug.log*
 .DS_Store
 yarn.lock
 package.lock
+package-lock.json
