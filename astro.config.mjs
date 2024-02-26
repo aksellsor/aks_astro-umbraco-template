@@ -3,9 +3,9 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  prefetch: {
-    defaultStrategy: 'hover', // 'tap'
-  },
+  // prefetch: {
+  //   defaultStrategy: 'hover', // 'tap'
+  // },
   integrations: [react()],
 });
 

@@ -1,9 +1,10 @@
 
 ---
-const { title, path, id } = Astro.props;
+const { name, path, id } = Astro.props;
 import { ViewTransitions } from 'astro:transitions';
 import Hotkeys from "../dev/Hotkeys.jsx"
 import CMDK from '../dev/CMDK-wrapper.astro';
+
 ---
 
 <html lang="en">
@@ -12,15 +13,15 @@ import CMDK from '../dev/CMDK-wrapper.astro';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<title>{name}</title>
 		<ViewTransitions />
 		<!-- <meta name="description" content={description} /> -->
 	</head>
-	<body>
+	<body transition:animate="none">
 		<CMDK/>
 		<Hotkeys client:load currentId={id}/>
 		<div class="page">
-			<nav transition:animate="none">
+			<nav >
 				<a href="/" class="logo">
 					LOGO
 				</a>
