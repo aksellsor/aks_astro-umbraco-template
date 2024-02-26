@@ -4,6 +4,8 @@ const { name, path, id } = Astro.props;
 import { ViewTransitions } from 'astro:transitions';
 import Hotkeys from "../dev/Hotkeys.jsx"
 import CMDK from '../dev/CMDK-wrapper.astro';
+const description = "This is a description placeholder for this website.";
+const ogImage = "https://via.placeholder.com/1200x630";
 ---
 
 <html lang="en">
@@ -12,9 +14,23 @@ import CMDK from '../dev/CMDK-wrapper.astro';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{name}</title>
 		<ViewTransitions />
-		<meta name="description" content="This is the SEO description of Astro template" />
+		<!-- SEO -->
+		<title>{name}</title>
+		<meta name="description" content={description}>
+
+		<!-- Facebook Meta Tags -->
+		<meta property="og:type" content="website">
+		<meta property="og:title" content={name}>
+		<meta property="og:description" content={description}>
+		<meta property="og:image" content={ogImage}>
+
+		<!-- Twitter Meta Tags -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content={name}>
+		<meta name="twitter:description" content={description}>
+		<meta name="twitter:image" content={ogImage}>
+
 	</head>
 	<body transition:animate="none">
 		<CMDK/>
