@@ -30,7 +30,7 @@ function getExpandParam(expand: Expand) {
 
 function getUmbracoImage(image) {
   if (!image) return;
-  const { url } = image[0];
-  return `${IMAGE_CDN}${url}`;
+  const { url, name } = image[0];
+  return { url: `${IMAGE_CDN}${url}`, name };
 }
 export { getSortParam, getExpandParam, getUmbracoImage };
