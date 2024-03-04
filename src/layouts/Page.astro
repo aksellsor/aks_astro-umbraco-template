@@ -17,8 +17,10 @@ const img = getUmbracoImage(props?.properties?.pageBg);
     width={1280}
     height={720}
     widths={[240,540,720,1280]}
+    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 1280px`}
     decoding="async"
     loading="lazy"
+    style="max-width: 100%; aspect-ratio: 1280 / 720; height: auto;"
 />
 <h1>
 
