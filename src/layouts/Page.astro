@@ -5,16 +5,20 @@ import {Image} from 'astro:assets'
 import { getUmbracoImage } from "../utils";
 const {props} = Astro.props;
 const img = getUmbracoImage(props?.properties?.pageBg);
+// const img = props?.properties?.pageBg[0];
+
 ---
 <!-- {JSON.stringify(props?.properties?.pageBg[0])} -->
 <Image
     src={img?.url}
     alt={img?.name}
-    inferSize={true}
+    format="webp"
+    quality="80"
     width={1280}
     height={720}
-    widths={[360,600,768,992,1280]}
-
+    widths={[240,540,720,1280]}
+    decoding="async"
+    loading="lazy"
 />
 <h1>
 

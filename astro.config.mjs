@@ -11,6 +11,9 @@ export default defineConfig({
   integrations: [react(), sitemap()],
   image: {
     domains: ['1235738-www.web.tornado-node.net'],
+    // service: {
+    //   entrypoint: 'src/imagesharp.ts',
+    // },
   },
 });
 
