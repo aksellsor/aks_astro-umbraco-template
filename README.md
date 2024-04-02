@@ -1,6 +1,6 @@
 ## 🚀Steps
 
-0. Add [Cloudflare Adapter](https://docs.astro.build/en/guides/integrations-guide/cloudflare/) (IF SSR)
+1. Add [Cloudflare Adapter](https://docs.astro.build/en/guides/integrations-guide/cloudflare/) (IF SSR)
 ```
 npx astro add cloudflare
 ```
