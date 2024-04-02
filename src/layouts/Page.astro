@@ -9,7 +9,7 @@ const img = getUmbracoImage(props?.properties?.pageBg);
 
 ---
 <!-- {JSON.stringify(props?.properties?.pageBg[0])} -->
-<Image
+{img && <Image
     src={img?.url}
     alt={img?.name}
     format="webp"
@@ -21,7 +21,7 @@ const img = getUmbracoImage(props?.properties?.pageBg);
     decoding="async"
     loading="lazy"
     style="max-width: 100%; aspect-ratio: 1280 / 720; height: auto;"
-/>
+/>}
 <h1>
 
     {props.name}
