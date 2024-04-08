@@ -1,6 +1,6 @@
 ---
 	// import {Image} from 'astro:assets';
-const logo = {url:"https://placeholder.pics/svg/150x100/323232/838383-3C3C3C/%5Blogo%5D", name:"logo"}
+// const logo = {url:"https://placeholder.pics/svg/150x100/323232/838383-3C3C3C/%5Blogo%5D", name:"logo"}
 let logoSVG = fetch("https://placeholder.pics/svg/150x100/323232/838383-3C3C3C/%5Blogo%5D")
     .then(res => res.text())
     .then(data => {
@@ -73,13 +73,10 @@ async function copySvgObject(svgSelector) {
   // Fjern tekstområdet fra DOM
   document.body.removeChild(textarea);
 }
-
-
 copyLogo.addEventListener("click", function(e) {
 	e.preventDefault();
   copySvgObject('#logo-clickable svg');
 });
-
 </script>
 
 <style>
