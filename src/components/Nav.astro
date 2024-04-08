@@ -5,11 +5,10 @@
 
 	const { path } = Astro.props;
 	const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }});
-	const logo = {url:"https://placehold.co/150x100",name:"logo"};
 ---
 
 <nav class="nav">
-	<Logo logo={logo}/>
+	<Logo />
 	<div class="menu">
 		{pages.map(post => {
 			// const { title, description, image } = post.properties;

@@ -1,30 +1,25 @@
 ---
-	import {Image} from 'astro:assets';
-	const { logo } = Astro.props;
+	// import {Image} from 'astro:assets';
+const logo = {url:"https://placeholder.pics/svg/150x100/323232/838383-3C3C3C/%5Blogo%5D", name:"logo"}
+let logoSVG = fetch("https://placeholder.pics/svg/150x100/323232/838383-3C3C3C/%5Blogo%5D")
+    .then(res => res.text())
+    .then(data => {
+      return data.match(/<svg.*<\/svg>/g)[0];
+    })
+    .catch(error => console.error(error))
 ---
 
 <a href="/" class="logo" id="logo-clickable">
-    <Image src={logo?.url} alt={logo?.name} inferSize />
+    <!-- <Image src={logo?.url} alt={logo?.name} inferSize /> -->
+    <Fragment set:html={logoSVG} />
 </a>
-
-<div id="menu">
-  <a class="menu-item" role="menuitem" download tabindex="-1" data-orientation="vertical" href={logo?.url}><svg height="1em" height="1.5em" data-sanity-icon="download" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.5 17V19.5H5.5V17M12.5 16L12.5 5" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"></path><path d="M17.5 11L12.5 16L7.5 11" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"></path></svg>Download logo (svg)</a>
-</div>
+<ul id="menu">
+<li class="menu-item" role="menuitem" id="copyLogo"><svg height="1em" width="1em" viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy (svg)</li>
+<li class="menu-item" role="menuitem">  <a download tabindex="-1" data-orientation="vertical" href={logo?.url}><svg height="1em" width="1em" data-sanity-icon="download" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.5 17V19.5H5.5V17M12.5 16L12.5 5" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"></path><path d="M17.5 11L12.5 16L7.5 11" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"></path></svg>Download logo (svg)</a></li>
+</ul>
 <script>
-  const clickable = document.getElementById('logo-clickable')
-  const contextMenu = document.getElementById('menu')
-
-  // clickable.addEventListener('contextmenu', e => {
-  //   e.preventDefault();
-  //       menu.style.top = `${e.clientY}px`;
-  //       menu.style.left = `${e.clientX}px`;
-  //       menu.classList.add('show');
-  // },false);
-  document.body.addEventListener("click", (e) => {
-      if (!event.target.closest('#logo-clickable')) {
-        menu.classList.remove('show');
-      }
-  }, false);
+  const clickable = document.getElementById('logo-clickable');
+  const contextMenu = document.getElementById('menu');
 
    clickable.addEventListener("contextmenu", (e) => {
         e.preventDefault();
@@ -49,19 +44,42 @@
         );
         contextMenu.classList.add('show');
       });
-  window.addEventListener("blur", () => contextMenu.classList.remove('show'));
+  // window.addEventListener("blur", () => contextMenu.classList.remove('show'));
   document.addEventListener("click", () => contextMenu.classList.remove('show'));
-  // document.addEventListener("contextmenu", (e) => {
-  //       contextMenu.remove();
-  // });
-  // clickable.addEventListener("mousedown", e => {
-  //   e.preventDefault();
-  //   if((e.which === 3 || e.button === 2)) {
-  //       menu.style.top = `${e.clientY}px`;
-  //       menu.style.left = `${e.clientX}px`;
-  //       menu.classList.add('show');
-  //   }
-  // },false);
+
+// copy to clipboard
+const copyLogo = document.querySelector('#copyLogo');
+async function copySvgObject(svgSelector) {
+  // Finn SVG-elementet
+  const svgElement = document.querySelector(svgSelector);
+  if (!svgElement) {
+    console.error('SVG was nout found');
+    return;
+  }
+
+  // Serializer SVG til en streng
+  const serializer = new XMLSerializer();
+  const svgString = serializer.serializeToString(svgElement);
+
+  // Opprett et midlertidig tekstområde for å kopiere strengen
+  const textarea = document.createElement('textarea');
+  textarea.value = svgString;
+  document.body.appendChild(textarea);
+
+  // Marker tekstområdet og kopier innholdet
+  textarea.select();
+  document.execCommand('copy');
+
+  // Fjern tekstområdet fra DOM
+  document.body.removeChild(textarea);
+}
+
+
+copyLogo.addEventListener("click", function(e) {
+	e.preventDefault();
+  copySvgObject('#logo-clickable svg');
+});
+
 </script>
 
 <style>
@@ -80,7 +98,7 @@
   --item-bg-hover: rgba(255, 255, 255, 0.1);
 display: block;
   background-color: white;
-  padding: 0.5rem;
+  padding: 0.25rem;
   border-radius: 5px;
   box-shadow: 2px 2px 30px lightgrey;
   position: fixed;
@@ -127,18 +145,28 @@ display: block;
   }
 }
 .menu-item {
-  border-radius: 5px;
-  display: flex;
-  gap: 1rem;
   line-height: 1;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem .75rem;
   transition: 0.1s;
   color: #fff;
   text-decoration: none;
+  font-size: .9rem;
+  border-radius: 5px;
+  border-bottom: 1px solid var(--item-border);
+  display: flex;
+  gap: .75rem;
 }
-
+.menu-item:last-child {
+  border-bottom: 0;
+}
+.menu-item a {
+  display: flex;
+  gap: .75rem;
+  text-decoration: none;
+}
 .menu-item:hover {
   background-color: var(--item-bg-hover);
   cursor: pointer;
+  border-color: transparent;
 }
 </style>
