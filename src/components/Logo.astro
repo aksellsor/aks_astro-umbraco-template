@@ -1,0 +1,144 @@
+---
+	import {Image} from 'astro:assets';
+	const { logo } = Astro.props;
+---
+
+<a href="/" class="logo" id="logo-clickable">
+    <Image src={logo?.url} alt={logo?.name} inferSize />
+</a>
+
+<div id="menu">
+  <a class="menu-item" role="menuitem" download tabindex="-1" data-orientation="vertical" href={logo?.url}><svg height="1em" height="1.5em" data-sanity-icon="download" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.5 17V19.5H5.5V17M12.5 16L12.5 5" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"></path><path d="M17.5 11L12.5 16L7.5 11" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"></path></svg>Download logo (svg)</a>
+</div>
+<script>
+  const clickable = document.getElementById('logo-clickable')
+  const contextMenu = document.getElementById('menu')
+
+  // clickable.addEventListener('contextmenu', e => {
+  //   e.preventDefault();
+  //       menu.style.top = `${e.clientY}px`;
+  //       menu.style.left = `${e.clientX}px`;
+  //       menu.classList.add('show');
+  // },false);
+  document.body.addEventListener("click", (e) => {
+      if (!event.target.closest('#logo-clickable')) {
+        menu.classList.remove('show');
+      }
+  }, false);
+
+   clickable.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        const { clientX, clientY } = e;
+        document.body.appendChild(contextMenu);
+
+        const positionY =
+          clientY + contextMenu.scrollHeight >= window.innerHeight
+            ? window.innerHeight - contextMenu.scrollHeight - 20
+            : clientY;
+        const positionX =
+          clientX + contextMenu.scrollWidth >= window.innerWidth
+            ? window.innerWidth - contextMenu.scrollWidth - 20
+            : clientX;
+
+        contextMenu.setAttribute(
+          "style",
+          `--width: ${contextMenu.scrollWidth}px;
+          --height: ${contextMenu.scrollHeight}px;
+          --top: ${positionY}px;
+          --left: ${positionX}px;`
+        );
+        contextMenu.classList.add('show');
+      });
+  window.addEventListener("blur", () => contextMenu.classList.remove('show'));
+  document.addEventListener("click", () => contextMenu.classList.remove('show'));
+  // document.addEventListener("contextmenu", (e) => {
+  //       contextMenu.remove();
+  // });
+  // clickable.addEventListener("mousedown", e => {
+  //   e.preventDefault();
+  //   if((e.which === 3 || e.button === 2)) {
+  //       menu.style.top = `${e.clientY}px`;
+  //       menu.style.left = `${e.clientX}px`;
+  //       menu.classList.add('show');
+  //   }
+  // },false);
+</script>
+
+<style>
+  #logo-clickable > * {
+    pointer-events: none;
+  }
+#menu {
+  --menu-border: rgba(255, 255, 255, 0.08);
+  --menu-bg: linear-gradient(
+    45deg,
+    rgba(10, 20, 28, 0.6) 0%,
+    rgba(10, 20, 28, 0.9) 100%
+  );
+  --item-border: rgba(255, 255, 255, 0.1);
+  --item-color: #fff;
+  --item-bg-hover: rgba(255, 255, 255, 0.1);
+display: block;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 2px 2px 30px lightgrey;
+  position: fixed;
+  transform-origin: left top;
+  z-index: 2;
+  opacity: 0;
+  overflow: hidden;
+  user-select: none;
+  transition:none;
+  top: var(--top);
+  left: var(--left);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 999999999;
+  background: var(--menu-bg);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  height: 0;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--menu-border), 0 2px 2px rgba(0, 0, 0, 0.03), 0 4px 4px rgba(0, 0, 0, 0.04), 0 10px 8px rgba(0, 0, 0, 0.05), 0 15px 15px rgba(0, 0, 0, 0.06), 0 30px 30px rgba(0, 0, 0, 0.07), 0 70px 65px rgba(0, 0, 0, 0.09);
+
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+#menu.show {
+  pointer-events: all;
+  animation: menuAnimation 0.2s 0s both;
+  /* opacity: 1;
+  transform: translateY(0);
+  transition:transform .2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity .2s cubic-bezier(0.25, 0.46, 0.45, 0.94); */
+}
+
+@keyframes menuAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    height: var(--height);
+    opacity: 1;
+    border-radius: 8px;
+    transform: scale(1);
+  }
+}
+.menu-item {
+  border-radius: 5px;
+  display: flex;
+  gap: 1rem;
+  line-height: 1;
+  padding: 0.5rem 1rem;
+  transition: 0.1s;
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  background-color: var(--item-bg-hover);
+  cursor: pointer;
+}
+</style>

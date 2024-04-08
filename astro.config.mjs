@@ -10,7 +10,7 @@ export default defineConfig({
   site: 'https://aks-astro-webhooks.pages.dev/',
   integrations: [react(), sitemap()],
   image: {
-    domains: ['1235738-www.web.tornado-node.net'],
+    domains: ['1235738-www.web.tornado-node.net', 'placehold.co'],
     // service: {
     //   entrypoint: 'src/imagesharp.ts',
     // },

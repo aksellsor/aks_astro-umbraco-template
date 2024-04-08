@@ -9,7 +9,7 @@ import Footer from "../components/Footer.astro"
 // SEO
 const { name, path, id } = Astro.props;
 const description = "This is a description placeholder for this website.";
-const ogImage = "https://via.placeholder.com/1200x630";
+const ogImage = { url:"https://placehold.co/1200x630" }
 ---
 
 <html lang="en">
@@ -27,13 +27,13 @@ const ogImage = "https://via.placeholder.com/1200x630";
 		<meta property="og:type" content="website">
 		<meta property="og:title" content={name}>
 		<meta property="og:description" content={description}>
-		<meta property="og:image" content={ogImage}>
+		<meta property="og:image" content={ogImage?.url}>
 
 		<!-- Twitter Meta Tags -->
 		<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:title" content={name}>
 		<meta name="twitter:description" content={description}>
-		<meta name="twitter:image" content={ogImage}>
+		<meta name="twitter:image" content={ogImage?.url}>
 
 	</head>
 	<body >
