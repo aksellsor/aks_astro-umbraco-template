@@ -1,11 +1,15 @@
 ---
 	import client from '../umbraco-client';
+	import Crumbs from "../components/Crumbs.astro"
+
+	const { path } = Astro.props;
 	const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }});
 ---
+
 <nav class="nav">
-    <a href="/" class="logo">
-        LOGO
-    </a>
+	<a href="/" class="logo">
+		LOGO
+	</a>
 	<div class="menu">
 		{pages.map(post => {
 			// const { title, description, image } = post.properties;
@@ -23,6 +27,8 @@
 		})}
 	</div>
 </nav>
+
+<Crumbs path={path}/>
 
 <style>
     .nav {

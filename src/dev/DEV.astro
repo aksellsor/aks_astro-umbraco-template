@@ -1,0 +1,72 @@
+---
+
+	import "../dev/Hotkeys.css"
+---
+
+
+<aside class="dev-sidebar">
+  <h4>Hotkeys</h4>
+  <table>
+    <tr><td><kbd class="kbc-button">Alt</kbd> + <kbd class="kbc-button">Shift</kbd> + <kbd class="kbc-button">D</kbd></td><td>Open DEV sidebar</td> </tr>
+    <tr><td><kbd class="kbc-button">CMD / CTRL</kbd> + <kbd class="kbc-button">K</kbd></td><td>open global search</td></tr>
+    <tr><td><kbd class="kbc-button">Alt</kbd> + <kbd class="kbc-button">Shift</kbd> + <kbd class="kbc-button">U</kbd></td><td>to open Umbraco. <small>(<b>PUBLIC_UMBRACO_URL</b> from .env)</small></td></tr>
+    <tr><td><kbd class="kbc-button">Alt</kbd> + <kbd class="kbc-button">Shift</kbd> + <kbd class="kbc-button">G</kbd></td><td>to open GitHub. <small>(<b>PUBLIC_GITHUB_REPO</b> from .env)</small></td></tr>
+    <tr><td><kbd class="kbc-button">Alt</kbd> + <kbd class="kbc-button">Shift</kbd> + <kbd class="kbc-button">C</kbd></td><td>to open Cloudflare. <small>(<b>PUBLIC_CLOUDFLARE_DASH</b> from .env)</small></td></tr>
+  </table>
+</aside>
+<script>
+    let sidebar = document.querySelector(".dev-sidebar");
+    document.body.addEventListener("click", (e) => {
+        if (!event.target.closest('.dev-sidebar')) {
+            sidebar.classList.remove("dev-sidebar--open")
+        }
+    }, false)
+</script>
+<style>
+    hr {
+        border-color: rgba(150,150,150,0.3);
+    }
+    table {
+        border-collapse:collapse
+    }
+    table,td,th {
+        border: 1px solid rgba(150,150,150,0.3);
+    }
+    td,th {
+        padding: 0.5rem;
+    }
+    .dev-sidebar {
+        position: fixed;
+        z-index: 999;
+        top: 1rem;
+        margin-top: auto;
+        margin-bottom: auto;
+        bottom:1rem;
+        left:1rem;
+        height:max-content;
+        max-height: 100dvh;
+        border-radius: .5rem;
+        right: auto;
+        background-color: #343434;
+        opacity: 0;
+        transform: translateX(-30%);
+        padding:2rem;
+        box-shadow: 0px 0px 50px rgb(0,0,0);
+        transition: all .2s cubic-bezier(0.215, 0.610, 0.355, 1);
+        pointer-events: none;
+    }
+    .dev-sidebar--open {
+        opacity: 1;
+        transform: translateX(0%);
+        pointer-events: all;
+    }
+	p {
+		color:#b3b3b3;
+	}
+	 small {
+		color: rgb(70, 145, 168);
+	 }
+	 small b {
+		color: rgb(128, 193, 212);
+	 }
+</style>

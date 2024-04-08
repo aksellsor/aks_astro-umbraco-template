@@ -4,7 +4,6 @@
 	const UMBRACO_ROOT_NODE = import.meta.env.UMBRACO_ROOT_NODE;
 	const { name, route, id } = await client.getContentById(UMBRACO_ROOT_NODE).then(res => res);
 ---
-
 <Layout {name} path={route.path} {id}>
-	<center><h1>{name}</h1></center>
+	<h1>{name}</h1>
 </Layout>

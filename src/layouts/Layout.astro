@@ -1,13 +1,15 @@
 
 ---
-const { name, path, id } = Astro.props;
 import Hotkeys from "../dev/Hotkeys.jsx"
+import DEV from '../dev/DEV.astro';
 import CMDK from '../dev/CMDK-wrapper.astro';
+import Nav from "../components/Nav.astro"
+import Footer from "../components/Footer.astro"
+
+// SEO
+const { name, path, id } = Astro.props;
 const description = "This is a description placeholder for this website.";
 const ogImage = "https://via.placeholder.com/1200x630";
-import Nav from "../components/Nav.astro"
-import Crumbs from "../components/Crumbs.astro"
-import { ViewTransitions } from 'astro:transitions';
 ---
 
 <html lang="en">
@@ -17,7 +19,6 @@ import { ViewTransitions } from 'astro:transitions';
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
   		<link rel="sitemap" href="/sitemap-index.xml" />
-		<ViewTransitions />
 		<!-- SEO -->
 		<title>{name}</title>
 		<meta name="description" content={description}>
@@ -36,26 +37,25 @@ import { ViewTransitions } from 'astro:transitions';
 
 	</head>
 	<body >
+		<DEV/>
 		<CMDK/>
 		<Hotkeys client:load currentId={id}/>
-		<div class="page" transition:animate="none">
-			<Nav/>
-			<main>
-				<Crumbs path={path}/>
+
+		<div class="page">
+			<Nav path={path}/>
+
+			<main class="content">
 				<slot />
 			</main>
-			<footer>
-				<video controls="" autoplay="true" muted="true" playsinline transition:persist="media-player">
-				<source src="https://ia804502.us.archive.org/33/items/GoldenGa1939_3/GoldenGa1939_3_512kb.mp4" type="video/mp4">
-				</video>
-			</footer>
+
+			<Footer/>
 		</div>
+
 	</body>
 </html>
 
 <!-- PAGE LAYOUT -->
 <style>
-	html,body,.page {height:100%;}
 	.page{display:flex;flex-direction: column;justify-content: space-between;}
 	footer {
 		margin-top: auto;
@@ -64,11 +64,23 @@ import { ViewTransitions } from 'astro:transitions';
 		align-items: center;
 		gap: 3rem;
 	}
+	.content {
+		margin-bottom: auto;
+	}
+
 </style>
 
 <!-- GLOBAL -->
 
 <style is:global>
+	html {
+    overflow: hidden;
+ }
+
+body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling:touch;
+}
     h1 {
         color: rgb(58, 206, 38);
     }
@@ -82,10 +94,12 @@ import { ViewTransitions } from 'astro:transitions';
 	}
 	body {
 		margin: auto;
-		padding: 0 1rem;
-		width: 1200px;
-		max-width: calc(100% - 2rem);
+		max-width: 1200px;
+		width: calc(100% - 2rem);
 		color: white;
 		font-size: 18px;
+  		overflow-anchor: none;
 	}
+	html,body,.page {height:100%;}
+	
 </style>

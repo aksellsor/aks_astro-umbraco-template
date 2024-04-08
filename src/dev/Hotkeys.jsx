@@ -1,5 +1,6 @@
 
 // External components
+import { useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 const REPO = import.meta.env.PUBLIC_GITHUB_REPO;
@@ -16,6 +17,7 @@ const AllHotkeys = ({ currentId }) => {
             .focus();
     };
     useHotkeys('alt+shift+g', () => openUrl(REPO));
+    useHotkeys('alt+shift+d', () => { document.querySelector(".dev-sidebar")?.classList.toggle("dev-sidebar--open"); });
     useHotkeys('alt+shift+u', () => {
         openUrl(`${UMBRACO}#/content/content/edit/${currentId}`);
     });

@@ -1,10 +1,9 @@
 ---
 // import { getUmbracoImage } from "../utils";
-import Btn from "../components/Btn.jsx";
 import {Image} from 'astro:assets'
 import { getUmbracoImage } from "../utils";
 const {props} = Astro.props;
-const img = getUmbracoImage(props?.properties?.pageBg);
+const img = getUmbracoImage(props?.properties?.featuredImage);
 // const img = props?.properties?.pageBg[0];
 
 ---
@@ -26,34 +25,6 @@ const img = getUmbracoImage(props?.properties?.pageBg);
 
     {props.name}
 </h1>
-<!-- <img src={getUmbracoImage(props.properties.pageBg)} class="img"/> -->
-
-
-<!--
-    client:load
-    Priority: High
-    Useful for: Immediately-visible UI elements that need to be interactive as soon as possible.
-
-    client:idle
-    Priority: Medium
-    Useful for: Lower-priority UI elements that don’t need to be immediately interactive.
-
-    client:visible
-    Priority: Low
-    Useful for: Low-priority UI elements that are either far down the page (“below the fold”) or so resource-intensive to load that you would prefer not to load them at all if the user never saw the element.
-
-    client:visible={{rootMargin: "200px"}}
-    Optionally, a value for rootMargin can be passed to the underlying IntersectionObserver. When rootMargin is specified, the component JavaScript will hydrate when a specified margin (in pixels) around the component enters the viewport, rather than the component itself.
-
-    
--->
-React rendered button:
-<Btn
-client:load
-
-
-
->Increment</Btn>
 
 <style>
     /* .img {
