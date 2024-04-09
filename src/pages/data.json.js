@@ -1,9 +1,11 @@
 import client from '../umbraco-client';
-let DEFAULT_LOCALE = import.meta.env.DEFAULT_LOCALE;
-let LOCALES = import.meta.env.LOCALES?.split(',');
+let PUBLIC_DEFAULT_LOCALE = import.meta.env.PUBLIC_DEFAULT_LOCALE;
+let PUBLIC_LOCALES = import.meta.env.PUBLIC_LOCALES?.split(',');
 export const prerender = true;
 export async function GET() {
-  let languages = LOCALES?.map((lang) => (lang === DEFAULT_LOCALE ? '' : lang));
+  let languages = PUBLIC_LOCALES?.map((lang) =>
+    lang === PUBLIC_DEFAULT_LOCALE ? '' : lang
+  );
   // const pages = await client.getContentByType('page', {
   //   sort: { type: 'createDate', order: 'asc' },
   // });

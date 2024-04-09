@@ -1,10 +1,10 @@
 ---
-let LOCALES = import.meta.env.LOCALES?.split(",");
+let PUBLIC_LOCALES = import.meta.env.PUBLIC_LOCALES?.split(",");
 const { path } = Astro.props;
 const getBreadcrumbs = (path) => {
       let pathParts = path?.split('/').filter((part) => part?.trim() !== '');
       let parts = [];
-      let foreignLang = LOCALES.includes(pathParts[0]);
+      let foreignLang = PUBLIC_LOCALES.includes(pathParts[0]);
       if(!foreignLang) parts = ['',...pathParts]
       else parts = pathParts;
     

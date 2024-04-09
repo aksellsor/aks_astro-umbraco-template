@@ -1,10 +1,10 @@
 ---
 	import client from '../umbraco-client';
 	import Logo from './Logo.astro';
-	let LOCALES = import.meta.env.LOCALES?.split(",");
+	let PUBLIC_LOCALES = import.meta.env.PUBLIC_LOCALES?.split(",");
 	let SSR = import.meta.env.RENDER_MODE === "SSR";
 
-	let langPrefix = LOCALES?.find(lang => lang === Astro.url.pathname.split("/")[1]);
+	let langPrefix = PUBLIC_LOCALES?.find(lang => lang === Astro.url.pathname.split("/")[1]);
 	// const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }});
 	let origin = new URL(Astro.url).origin;
 	let preview = Astro.url.searchParams.get("preview");

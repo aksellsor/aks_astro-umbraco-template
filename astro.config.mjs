@@ -4,11 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import cloudflare from '@astrojs/cloudflare';
 
 import { loadEnv } from 'vite';
-const { RENDER_MODE, IMAGE_DOMAIN, LOCALES, DEFAULT_LOCALE } = loadEnv(
-  import.meta.env,
-  process.cwd(),
-  ''
-);
+const { RENDER_MODE, IMAGE_DOMAIN, PUBLIC_LOCALES, PUBLIC_DEFAULT_LOCALE } =
+  loadEnv(import.meta.env, process.cwd(), '');
 
 let renderSpecific = {};
 if (RENDER_MODE === 'SSR') {
@@ -34,8 +31,8 @@ export default defineConfig({
   // site: 'https://aks-astro-webhooks.pages.dev/',
   integrations: [react(), sitemap()],
   i18n: {
-    defaultLocale: DEFAULT_LOCALE,
-    locales: LOCALES.split(','),
+    defaultLocale: PUBLIC_DEFAULT_LOCALE,
+    locales: PUBLIC_LOCALES.split(','),
     routing: {
       prefixDefaultLocale: false,
     },

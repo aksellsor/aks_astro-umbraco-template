@@ -4,15 +4,47 @@ import client from '../umbraco-client';
 import Page from '../layouts/Page.astro';
 import Root from '../layouts/Root.astro';
 
-let SSR = import.meta.env.RENDER_MODE === "SSR";
-let LOCALES = import.meta.env.LOCALES?.split(",");
+const SSR = import.meta.env.RENDER_MODE === "SSR";
+
 export async function getStaticPaths() {
-	const pages = await client.getContentByType('page',null,LOCALES?.includes(Astro.params.slug.split("/")[0]));
+	let PUBLIC_DEFAULT_LOCALE = import.meta.env.PUBLIC_DEFAULT_LOCALE;
+	let PUBLIC_LOCALES = import.meta.env.PUBLIC_LOCALES?.split(',');
+	let languages = PUBLIC_LOCALES?.map((lang) =>
+		lang === PUBLIC_DEFAULT_LOCALE ? '' : lang
+	);
+		
+	async function getContentByLocale(locale) {
+		const pages = await client.getContentByType(
+		`page`,
+		{
+			sort: { type: 'createDate', order: 'asc' },
+		},
+		locale
+		);
+
+		const root = await client.getContentByType(
+		`root`,
+		{
+			sort: { type: 'createDate', order: 'asc' },
+		},
+		locale
+		);
+
+		return [...pages, ...root];
+	}
+
+	// Kaller getContentByLocale for hver locale og venter på alle løftene
+	const allContentPromises = languages?.map((locale) =>
+		getContentByLocale(locale)
+	);
+	const allContent = await Promise.all(allContentPromises);
+  	const pages = allContent.flat();
 	return [...pages].map((page) => ({
 		params: { slug: page.route.path.replace(/^\/|\/$/,"") },
 		props: page
 	}))
 }
+
 let currentSlug = Astro.params.slug || "/";
 let origin = new URL(Astro.url).origin;
 let preview = Astro.url.searchParams.get("preview");
