@@ -5,47 +5,48 @@ import Page from '../layouts/Page.astro';
 import Root from '../layouts/Root.astro';
 
 const SSR = import.meta.env.RENDER_MODE === "SSR";
+let UMBRACO_ROOT_NODE =  import.meta.env.UMBRACO_ROOT_NODE;
 
-export async function getStaticPaths() {
-	let PUBLIC_DEFAULT_LOCALE = import.meta.env.PUBLIC_DEFAULT_LOCALE;
-	let PUBLIC_LOCALES = import.meta.env.PUBLIC_LOCALES?.split(',');
-	let languages = PUBLIC_LOCALES?.map((lang) =>
-		lang === PUBLIC_DEFAULT_LOCALE ? '' : lang
-	);
+// export async function getStaticPaths() {
+// 	let PUBLIC_DEFAULT_LOCALE = import.meta.env.PUBLIC_DEFAULT_LOCALE;
+// 	let PUBLIC_LOCALES = import.meta.env.PUBLIC_LOCALES?.split(',');
+// 	let languages = PUBLIC_LOCALES?.map((lang) =>
+// 		lang === PUBLIC_DEFAULT_LOCALE ? '' : lang
+// 	);
 		
-	async function getContentByLocale(locale) {
-		const pages = await client.getContentByType(
-		`page`,
-		{
-			sort: { type: 'createDate', order: 'asc' },
-		},
-		locale
-		);
+// 	async function getContentByLocale(locale) {
+// 		const pages = await client.getContentByType(
+// 		`page`,
+// 		{
+// 			sort: { type: 'createDate', order: 'asc' },
+// 		},
+// 		locale
+// 		);
 
-		const root = await client.getContentByType(
-		`root`,
-		{
-			sort: { type: 'createDate', order: 'asc' },
-		},
-		locale
-		);
+// 		const root = await client.getContentByType(
+// 		`root`,
+// 		{
+// 			sort: { type: 'createDate', order: 'asc' },
+// 		},
+// 		locale
+// 		);
 
-		return [...pages, ...root];
-	}
+// 		return [...pages, ...root];
+// 	}
 
-	// Kaller getContentByLocale for hver locale og venter på alle løftene
-	const allContentPromises = languages?.map((locale) =>
-		getContentByLocale(locale)
-	);
-	const allContent = await Promise.all(allContentPromises);
-  	const pages = allContent.flat();
-	return [...pages].map((page) => ({
-		params: { slug: page.route.path.replace(/^\/|\/$/,"") },
-		props: page
-	}))
-}
+// 	// Kaller getContentByLocale for hver locale og venter på alle løftene
+// 	const allContentPromises = languages?.map((locale) =>
+// 		getContentByLocale(locale)
+// 	);
+// 	const allContent = await Promise.all(allContentPromises);
+//   	const pages = allContent.flat();
+// 	return [...pages].map((page) => ({
+// 		params: { slug: page.route.path.replace(/^\/|\/$/,"") },
+// 		props: page
+// 	}))
+// }
 
-let currentSlug = Astro.params.slug || "/";
+let currentSlug = Astro.params.slug || UMBRACO_ROOT_NODE;
 let origin = new URL(Astro.url).origin;
 let preview = Astro.url.searchParams.get("preview");
 const pageData = SSR ? await client.getContentById(origin,currentSlug,preview).then(res => res) : Astro.props;

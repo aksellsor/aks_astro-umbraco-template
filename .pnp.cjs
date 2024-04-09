@@ -29,9 +29,12 @@ const RAW_RUNTIME_STATE =
           ["@astrojs/cloudflare", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:10.0.3"],\
           ["@astrojs/react", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:3.1.1"],\
           ["@astrojs/sitemap", "npm:3.1.2"],\
+          ["@nanostores/persistent", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:0.10.1"],\
+          ["@nanostores/react", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:0.7.2"],\
           ["@types/react", "npm:18.2.74"],\
           ["@types/react-dom", "npm:18.2.24"],\
           ["astro", "npm:4.5.16"],\
+          ["nanostores", "npm:0.10.3"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:18.2.0"],\
           ["react-hotkeys-hook", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:4.5.0"],\
@@ -1325,6 +1328,54 @@ const RAW_RUNTIME_STATE =
           ["@jridgewell/trace-mapping", "npm:0.3.9"],\
           ["@jridgewell/resolve-uri", "npm:3.1.2"],\
           ["@jridgewell/sourcemap-codec", "npm:1.4.15"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@nanostores/persistent", [\
+      ["npm:0.10.1", {\
+        "packageLocation": "../../.yarn/berry/cache/@nanostores-persistent-npm-0.10.1-3f3d89c854-10c0.zip/node_modules/@nanostores/persistent/",\
+        "packageDependencies": [\
+          ["@nanostores/persistent", "npm:0.10.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:0.10.1", {\
+        "packageLocation": "./.yarn/__virtual__/@nanostores-persistent-virtual-a50b8e6356/3/.yarn/berry/cache/@nanostores-persistent-npm-0.10.1-3f3d89c854-10c0.zip/node_modules/@nanostores/persistent/",\
+        "packageDependencies": [\
+          ["@nanostores/persistent", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:0.10.1"],\
+          ["@types/nanostores", null],\
+          ["nanostores", "npm:0.10.3"]\
+        ],\
+        "packagePeers": [\
+          "@types/nanostores",\
+          "nanostores"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@nanostores/react", [\
+      ["npm:0.7.2", {\
+        "packageLocation": "../../.yarn/berry/cache/@nanostores-react-npm-0.7.2-fee28566a6-10c0.zip/node_modules/@nanostores/react/",\
+        "packageDependencies": [\
+          ["@nanostores/react", "npm:0.7.2"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:0.7.2", {\
+        "packageLocation": "./.yarn/__virtual__/@nanostores-react-virtual-75fdaf6b12/3/.yarn/berry/cache/@nanostores-react-npm-0.7.2-fee28566a6-10c0.zip/node_modules/@nanostores/react/",\
+        "packageDependencies": [\
+          ["@nanostores/react", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:0.7.2"],\
+          ["@types/nanostores", null],\
+          ["@types/react", "npm:18.2.74"],\
+          ["nanostores", "npm:0.10.3"],\
+          ["react", "npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/nanostores",\
+          "@types/react",\
+          "nanostores",\
+          "react"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3086,9 +3137,12 @@ const RAW_RUNTIME_STATE =
           ["@astrojs/cloudflare", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:10.0.3"],\
           ["@astrojs/react", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:3.1.1"],\
           ["@astrojs/sitemap", "npm:3.1.2"],\
+          ["@nanostores/persistent", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:0.10.1"],\
+          ["@nanostores/react", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:0.7.2"],\
           ["@types/react", "npm:18.2.74"],\
           ["@types/react-dom", "npm:18.2.24"],\
           ["astro", "npm:4.5.16"],\
+          ["nanostores", "npm:0.10.3"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:18.2.0"],\
           ["react-hotkeys-hook", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:4.5.0"],\
@@ -4767,6 +4821,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../.yarn/berry/cache/nanoid-npm-3.3.7-98824ba130-10c0.zip/node_modules/nanoid/",\
         "packageDependencies": [\
           ["nanoid", "npm:3.3.7"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["nanostores", [\
+      ["npm:0.10.3", {\
+        "packageLocation": "../../.yarn/berry/cache/nanostores-npm-0.10.3-06f295b499-10c0.zip/node_modules/nanostores/",\
+        "packageDependencies": [\
+          ["nanostores", "npm:0.10.3"]\
         ],\
         "linkType": "HARD"\
       }]\

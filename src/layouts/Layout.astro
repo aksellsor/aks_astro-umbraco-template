@@ -1,16 +1,26 @@
 
 ---
-import Hotkeys from "../dev/Hotkeys.jsx"
-import DEV from '../dev/DEV.astro';
-import CMDK from '../dev/CMDK-wrapper.astro';
-import Nav from "../components/Nav.astro"
-import Footer from "../components/Footer.astro"
-import Cultures from "../components/Cultures.astro";
+	import Hotkeys from "../dev/Hotkeys.jsx"
+	import DEV from '../dev/DEV.astro';
+	import CMDK from '../dev/CMDK-wrapper.astro';
+	import Nav from "../components/Nav.astro"
+	import DarkmodeToggle from "../components/DarkmodeToggle.jsx"
+	import Footer from "../components/Footer.astro"
+	import Cultures from "../components/Cultures.astro";
+	import client from '../umbraco-client';
 
-// SEO
-const { name, path, id, cultures } = Astro.props;
-const description = "This is a description placeholder for this website.";
-const ogImage = { url:"https://placehold.co/1200x630" }
+	// SEO
+	const { name, path, id, cultures } = Astro.props;
+	const description = "This is a description placeholder for this website.";
+	const ogImage = { url:"https://placehold.co/1200x630" }
+	let UMBRACO_ROOT_NODE =  import.meta.env.UMBRACO_ROOT_NODE;
+
+	// Global state
+	let currentSlug = Astro.params.slug || UMBRACO_ROOT_NODE;
+	let origin = new URL(Astro.url).origin;
+	let preview = Astro.url.searchParams.get("preview");
+	const pageData = await client.getRootData(origin,currentSlug,preview).then(res => res);
+	const { properties } = pageData || {};
 ---
 
 <html lang="en">
@@ -39,21 +49,34 @@ const ogImage = { url:"https://placehold.co/1200x630" }
 	</head>
 	<body >
 		<DEV/>
-		<!-- <CMDK client:load currentId={id}/> -->
+		<CMDK client:load currentId={id}/>
 		<Hotkeys client:load currentId={id}/>
 		<div class="page">
-			<Nav path={path}/>
+			<Nav path={path} navMenu={properties?.navMenu}/>
 			<Cultures {cultures}/>
 
 			<main class="content">
 				<slot />
 			</main>
 
+			<DarkmodeToggle client:only/>
+			<div id="darkmode-status"></div>
 			<Footer/>
 		</div>
 
 	</body>
 </html>
+<script>
+    import { darkmode } from '../globalState';
+	darkmode.subscribe(dm => {
+		document.querySelector("#darkmode-status").innerHTML = dm;
+	});
+</script>
+<!-- 
+<script define:vars={{ properties: properties}} type="module">
+	import { atom } from 'nanostores';
+	export const globalProps = atom(properties);
+</script> -->
 
 <!-- PAGE LAYOUT -->
 <style>
@@ -72,7 +95,6 @@ const ogImage = { url:"https://placehold.co/1200x630" }
 </style>
 
 <!-- GLOBAL -->
-
 <style is:global>
 	body {color: white;}html {background: #13151a;}
 	html {
@@ -93,5 +115,4 @@ const ogImage = { url:"https://placehold.co/1200x630" }
   		overflow-anchor: none;
 	}
 	html,body,.page {height:100%;}
-	
 </style>

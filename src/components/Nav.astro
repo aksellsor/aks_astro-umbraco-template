@@ -1,22 +1,6 @@
 ---
-	import client from '../umbraco-client';
 	import Logo from './Logo.astro';
-	let PUBLIC_LOCALES = import.meta.env.PUBLIC_LOCALES?.split(",");
-	let SSR = import.meta.env.RENDER_MODE === "SSR";
-
-	let langPrefix = PUBLIC_LOCALES?.find(lang => lang === Astro.url.pathname.split("/")[1]);
-	// const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }});
-	let origin = new URL(Astro.url).origin;
-	let preview = Astro.url.searchParams.get("preview");
-	const pageData = SSR ? await client.getContentById(origin,langPrefix || "/",preview).then(res => res) : Astro.props;
-	if (pageData?.status === 404) {
-		return new Response(null, {
-			status: 404,
-			statusText: 'Not found!',
-		});
-	}
-	const { properties } = pageData || {};
-	let navMenu = properties?.navMenu;
+	const {navMenu } = Astro.props;
 ---
 
 <nav class="nav">
@@ -35,20 +19,6 @@
 				</a>
 			);
 		})}
-		<!-- {pages.map(post => {
-			// const { title, description, image } = post.properties;
-			const { path } = post.route
-			return (
-				<a
-					href={`${path}`}
-					class="link"
-					// data-astro-prefetch="tap"
-					// data-astro-prefetch="hover"
-				>
-					{post.name}
-				</a>
-			);
-		})} -->
 	</div>
 </nav>
 
@@ -60,12 +30,6 @@
 		gap:3rem;
 		padding: 1.5rem 0;
     }
-    .logo {
-		display: block;
-		color: inherit;
-		text-decoration: none;
-	}
-
 	.menu {
 		display:flex;
         flex-wrap: wrap;

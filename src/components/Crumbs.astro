@@ -1,5 +1,6 @@
 ---
 let PUBLIC_LOCALES = import.meta.env.PUBLIC_LOCALES?.split(",");
+let UMBRACO_ROOT_NODE =  import.meta.env.UMBRACO_ROOT_NODE;
 const { path } = Astro.props;
 const getBreadcrumbs = (path) => {
       let pathParts = path?.split('/').filter((part) => part?.trim() !== '');
@@ -10,10 +11,10 @@ const getBreadcrumbs = (path) => {
     
       return parts?.map((part, partIndex) => {
         const previousParts = parts.slice(0, partIndex);
-        let prevSlugs = previousParts?.join('/');
+        // let prevSlugs = previousParts?.join('/');
         return {
           label: part,
-          href: previousParts?.length > 0 ? `${foreignLang ? "/":""}${previousParts?.join('/')}/${part}` : `/${part}`,
+          href: previousParts?.length > 0 ? `${foreignLang ? UMBRACO_ROOT_NODE :""}${previousParts?.join('/')}/${part}` : `/${part}`,
         };
       });
 }
