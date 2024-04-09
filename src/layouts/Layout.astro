@@ -19,7 +19,8 @@
 	let currentSlug = Astro.params.slug || UMBRACO_ROOT_NODE;
 	let origin = new URL(Astro.url).origin;
 	let preview = Astro.url.searchParams.get("preview");
-	const pageData = await client.getRootData(origin,currentSlug,preview).then(res => res);
+	let culture = Astro.url.searchParams.get("culture");
+	const pageData = await client.getRootData(origin,currentSlug,culture).then(res => res);
 	const { properties } = pageData || {};
 ---
 

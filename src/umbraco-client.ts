@@ -17,8 +17,8 @@ class UmbracoClient {
 
   async getContentFromUmbraco(
     id: string,
-    preview: string = 'false',
-    // culture: string = '',
+    preview: any,
+    culture: string = '',
     { expand }: { expand?: Expand } = {}
   ) {
     return await fetch(
@@ -26,9 +26,9 @@ class UmbracoClient {
       {
         method: 'GET',
         headers: {
-          Preview: preview,
+          Preview: preview ? true : false,
           'Api-Key': PREVIEW_API_KEY,
-          // 'Accept-Language': culture,
+          'Accept-Language': culture,
         },
       }
     );
@@ -52,13 +52,13 @@ class UmbracoClient {
     url: string,
     id: string,
     preview: boolean = false,
-    // culture: string = '',
+    culture: string = '',
     { expand }: { expand?: Expand } = {}
   ) {
     if (preview || GET_FROM_LOCAL_JSON === 'false' || RENDER_MODE === 'SSG') {
       let data = null;
       let err = null;
-      await this.getContentFromUmbraco(id, preview, {
+      await this.getContentFromUmbraco(id, preview, culture, {
         expand,
       }).then((r) => {
         if (r.status != 200) {
@@ -137,7 +137,12 @@ class UmbracoClient {
     const flattenedContent = allContent.flat();
     return flattenedContent;
   }
-  async getRootData(origin, pathname, preview) {
+  async getRootData(
+    origin: string,
+    pathname: string,
+    preview: boolean = false,
+    culture: string = ''
+  ) {
     let langPrefix = PUBLIC_LOCALES?.find(
       (lang) => lang === pathname.split('/')[1]
     );
@@ -145,7 +150,8 @@ class UmbracoClient {
     const pageData = await this.getContentById(
       origin,
       langPrefix || UMBRACO_ROOT_NODE,
-      preview
+      preview,
+      culture
     ).then((res) => res);
     return pageData;
   }

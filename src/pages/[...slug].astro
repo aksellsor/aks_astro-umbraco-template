@@ -49,7 +49,8 @@ let UMBRACO_ROOT_NODE =  import.meta.env.UMBRACO_ROOT_NODE;
 let currentSlug = Astro.params.slug || UMBRACO_ROOT_NODE;
 let origin = new URL(Astro.url).origin;
 let preview = Astro.url.searchParams.get("preview");
-const pageData = SSR ? await client.getContentById(origin,currentSlug,preview).then(res => res) : Astro.props;
+let culture = Astro.url.searchParams.get("culture");
+const pageData = SSR ? await client.getContentById(origin,currentSlug,preview,culture).then(res => res) : Astro.props;
 if (pageData?.status === 404) {
 	return new Response(null, {
 		status: 404,
