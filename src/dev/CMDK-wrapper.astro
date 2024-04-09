@@ -9,5 +9,6 @@
 	const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }});
 	
 	const allRoutes = [page,...pages];
+	const {currentId} = Astro.props;
 ---
-<CMDK client:only routes={allRoutes}/>
+{allRoutes && currentId && <CMDK client:only routes={allRoutes} currentId={currentId}/>}
