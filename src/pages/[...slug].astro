@@ -1,39 +1,39 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import client from '../umbraco-client';
-
 import Page from '../layouts/Page.astro';
-// import Article from '../components/Article.astro';
+import Root from '../layouts/Root.astro';
 
+let SSR = import.meta.env.RENDER_MODE === "SSR";
+let LOCALES = import.meta.env.LOCALES?.split(",");
 export async function getStaticPaths() {
-	const pages = await client.getContentByType('page');
-	// const articles = await client.getContentByType('article');
-	// console.log([...pages, ...articles].map((page) => {
-	// 	return {
-	// 	params: { slug:page.route.path },
-	// 	props: page.properties,
-	// 	};
-	// }));
+	const pages = await client.getContentByType('page',null,LOCALES?.includes(Astro.params.slug.split("/")[0]));
 	return [...pages].map((page) => ({
 		params: { slug: page.route.path.replace(/^\/|\/$/,"") },
 		props: page
 	}))
-	
 }
-
-const { contentType, route, name, id } = Astro.props;
+let currentSlug = Astro.params.slug || "/";
+let origin = new URL(Astro.url).origin;
+let preview = Astro.url.searchParams.get("preview");
+const pageData = SSR ? await client.getContentById(origin,currentSlug,preview).then(res => res) : Astro.props;
+if (pageData?.status === 404) {
+	return new Response(null, {
+		status: 404,
+		statusText: 'Not found!',
+	});
+}
+const { contentType, name, route, id, cultures } = pageData || {};
 ---
 
-<Layout {name} path={route.path} {id}>
+<Layout {name} path={route?.path} {id} {cultures}>
 	{
 		() => {
 			switch(contentType) {
-				// case "article":
-				// 	return <Article props={Astro.props}/>
 				case "page":
-					return <Page props={Astro.props}/>
+					return <Page props={pageData}/>
 				default:
-					return null
+					return <Root props={pageData}/>
 			}
 		}
 	}

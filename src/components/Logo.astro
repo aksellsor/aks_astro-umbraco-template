@@ -29,7 +29,7 @@ let logoSVG = fetch(logo.url)
   const clickable = document.getElementById('logo-clickable');
   const contextMenu = document.getElementById('menu');
 
-   clickable.addEventListener("contextmenu", (e) => {
+   clickable?.addEventListener("contextmenu", (e) => {
         e.preventDefault();
         const { clientX, clientY } = e;
         document.body.appendChild(contextMenu);
@@ -81,7 +81,7 @@ async function copySvgObject(svgSelector) {
   // Fjern tekstområdet fra DOM
   document.body.removeChild(textarea);
 }
-copyLogo.addEventListener("click", function(e) {
+copyLogo?.addEventListener("click", function(e) {
 	e.preventDefault();
   copySvgObject('#logo-clickable svg');
 });

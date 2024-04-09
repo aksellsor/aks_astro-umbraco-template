@@ -67,8 +67,8 @@ const Row = ({ index, style, data }) => {
         </div>
     );
 };
-const CMDK = ({ routes }) => {
-    let currentId = routes.find(r => r.route.path === window.location.pathname);
+const CMDK = ({ routes, currentId }) => {
+    // let currentId = routes?.find(r => r.route.path === window.location.pathname);
     const [open, setOpen] = useState(false);
 
     const rows = useRef(null);

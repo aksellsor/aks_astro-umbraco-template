@@ -5,9 +5,10 @@ import DEV from '../dev/DEV.astro';
 import CMDK from '../dev/CMDK-wrapper.astro';
 import Nav from "../components/Nav.astro"
 import Footer from "../components/Footer.astro"
+import Cultures from "../components/Cultures.astro";
 
 // SEO
-const { name, path, id } = Astro.props;
+const { name, path, id, cultures } = Astro.props;
 const description = "This is a description placeholder for this website.";
 const ogImage = { url:"https://placehold.co/1200x630" }
 ---
@@ -38,11 +39,11 @@ const ogImage = { url:"https://placehold.co/1200x630" }
 	</head>
 	<body >
 		<DEV/>
-		<CMDK/>
+		<!-- <CMDK client:load currentId={id}/> -->
 		<Hotkeys client:load currentId={id}/>
-
 		<div class="page">
 			<Nav path={path}/>
+			<Cultures {cultures}/>
 
 			<main class="content">
 				<slot />
@@ -73,30 +74,21 @@ const ogImage = { url:"https://placehold.co/1200x630" }
 <!-- GLOBAL -->
 
 <style is:global>
+	body {color: white;}html {background: #13151a;}
 	html {
-    overflow: hidden;
- }
-
-body {
-    overflow-y: auto;
-    -webkit-overflow-scrolling:touch;
-}
-    h1 {
-        color: rgb(58, 206, 38);
-    }
+    	overflow: hidden;
+		font-family: system-ui, sans-serif;
+	}
 	a {
 		color: inherit;
 		text-underline-offset: .3em;
 	}
-  	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-	}
 	body {
+		overflow-y: auto;
+		-webkit-overflow-scrolling:touch;
 		margin: auto;
 		max-width: 1200px;
 		width: calc(100% - 2rem);
-		color: white;
 		font-size: 18px;
   		overflow-anchor: none;
 	}

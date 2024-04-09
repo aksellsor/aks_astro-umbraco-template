@@ -1,6 +1,23 @@
 ---
+let LOCALES = import.meta.env.LOCALES?.split(",");
 const { path } = Astro.props;
-import BackBtn from "./BackBtn"
+const getBreadcrumbs = (path) => {
+      let pathParts = path?.split('/').filter((part) => part?.trim() !== '');
+      let parts = [];
+      let foreignLang = LOCALES.includes(pathParts[0]);
+      if(!foreignLang) parts = ['',...pathParts]
+      else parts = pathParts;
+    
+      return parts?.map((part, partIndex) => {
+        const previousParts = parts.slice(0, partIndex);
+        let prevSlugs = previousParts?.join('/');
+        return {
+          label: part,
+          href: previousParts?.length > 0 ? `${foreignLang ? "/":""}${previousParts?.join('/')}/${part}` : `/${part}`,
+        };
+      });
+}
+let crumbs = getBreadcrumbs(path);
 ---
 
    <!--
@@ -22,18 +39,25 @@ import BackBtn from "./BackBtn"
 
      -->
 {path !== "/" &&
-<>
-    React rendered button:<br/>
-    <BackBtn client:load/>
-    <hr/>
-    <div class="crumbs">{path?.split("/").slice(0,-1)?.map(p => <a href={`/${p}`}>{p ==="" ? <svg stroke="currentColor" width="1em" height="1em" fill="currentColor" strokeWidth="0" viewBox="0 0 20 20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>: p.replace(/-/g," ")}</a>)}</div>
-</>
+    <>
+        <div class="crumbs">
+            {
+                crumbs?.map((crumb,index) =>
+                    <a href={crumb.href}>
+                        {index === 0
+                            ?
+                            <svg stroke="currentColor" width="1em" height="1em" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                            : 
+                            crumb.label
+                        }
+                    </a>
+            )
+            }
+        </div>
+    </>
 }
 
 <style>
-    hr {
-        border-color: rgba(150,150,150,0.3);
-    }
     .crumbs {
         display: flex;
         flex-wrap: wrap;

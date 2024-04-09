@@ -16,8 +16,12 @@ const AllHotkeys = ({ currentId }) => {
             )
             .focus();
     };
-    useHotkeys('alt+shift+g', () => openUrl(REPO));
-    useHotkeys('alt+shift+d', () => { document.querySelector(".dev-sidebar")?.classList.toggle("dev-sidebar--open"); });
+    useHotkeys('alt+shift+g', () => {
+        openUrl(REPO);
+    });
+    useHotkeys('alt+shift+d', () => {
+        document.querySelector(".dev-sidebar")?.classList.toggle("dev-sidebar--open");
+    });
     useHotkeys('alt+shift+u', () => {
         openUrl(`${UMBRACO}#/content/content/edit/${currentId}`);
     });

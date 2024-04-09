@@ -2,12 +2,18 @@
 // import { getUmbracoImage } from "../utils";
 import {Image} from 'astro:assets'
 import { getUmbracoImage } from "../utils";
+import Crumbs from "../components/Crumbs.astro"
+import BackBtn from "../components/BackBtn"
 const {props} = Astro.props;
 const img = getUmbracoImage(props?.properties?.featuredImage);
+const path = Astro.url.pathname;
 ---
 
+<Crumbs path={path}/>
+<BackBtn client:load/>
+
 <h1>
-    {props.name}
+    {props?.name}
 </h1>
 {img &&
     <Image

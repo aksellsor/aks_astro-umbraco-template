@@ -1,16 +1,40 @@
 ---
 	import client from '../umbraco-client';
-	import Crumbs from "../components/Crumbs.astro"
 	import Logo from './Logo.astro';
+	let LOCALES = import.meta.env.LOCALES?.split(",");
+	let SSR = import.meta.env.RENDER_MODE === "SSR";
 
-	const { path } = Astro.props;
-	const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }});
+	let langPrefix = LOCALES?.filter(lang => lang === Astro.url.pathname.split("/")[1])
+	// const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }});
+	let origin = new URL(Astro.url).origin;
+	let preview = Astro.url.searchParams.get("preview");
+	const pageData = SSR ? await client.getContentById(origin,langPrefix || "/",preview).then(res => res) : Astro.props;
+	if (pageData?.status === 404) {
+		return new Response(null, {
+			status: 404,
+			statusText: 'Not found!',
+		});
+	}
+	const { properties } = pageData || {};
+	let navMenu = properties?.navMenu;
 ---
-
 <nav class="nav">
 	<Logo />
 	<div class="menu">
-		{pages.map(post => {
+		{navMenu?.map(page => {
+			const { path } = page.route
+			return (
+				<a
+					href={`${path}`}
+					class="link"
+					// data-astro-prefetch="tap"
+					// data-astro-prefetch="hover"
+				>
+					{page.title}
+				</a>
+			);
+		})}
+		<!-- {pages.map(post => {
 			// const { title, description, image } = post.properties;
 			const { path } = post.route
 			return (
@@ -23,11 +47,9 @@
 					{post.name}
 				</a>
 			);
-		})}
+		})} -->
 	</div>
 </nav>
-
-<Crumbs path={path}/>
 
 <style>
     .nav {

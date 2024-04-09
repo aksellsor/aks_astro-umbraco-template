@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+const path = Astro.url.pathname;
+---
+<Layout>
+    <div class="err-box">
+        <h1>404!</h1>
+        <p>
+           <b> {path}</b> was not found
+        </p>
+    </div>
+</Layout>
+
+<style>
+    .err-box {
+        display:grid;
+        place-content:center;
+        height:100%;
+        text-align:center;
+        background: rgba(236, 78, 78, 0.1);
+        padding:1rem;
+        color: rgb(255, 97, 97);
+    }
+</style>

@@ -1,27 +1,44 @@
 import react from '@astrojs/react';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import cloudflare from '@astrojs/cloudflare';
 
-// https://astro.build/config
+import { loadEnv } from 'vite';
+const { RENDER_MODE, IMAGE_DOMAIN, LOCALES, DEFAULT_LOCALE } = loadEnv(
+  import.meta.env,
+  process.cwd(),
+  ''
+);
+
+let renderSpecific = {};
+if (RENDER_MODE === 'SSR') {
+  renderSpecific = {
+    output: 'server',
+    adapter: cloudflare(),
+  };
+}
+if (RENDER_MODE === 'SSG') {
+  renderSpecific = {
+    image: {
+      domains: [`${IMAGE_DOMAIN}`, 'placehold.co'],
+      // service: {
+      //   entrypoint: 'src/imagesharp.ts',
+      // },
+    },
+  };
+}
 export default defineConfig({
   prefetch: {
     defaultStrategy: 'hover', // 'tap'
   },
-  site: 'https://aks-astro-webhooks.pages.dev/',
+  // site: 'https://aks-astro-webhooks.pages.dev/',
   integrations: [react(), sitemap()],
-  image: {
-    domains: ['1235738-www.web.tornado-node.net', 'placehold.co'],
-    // service: {
-    //   entrypoint: 'src/imagesharp.ts',
-    // },
+  i18n: {
+    defaultLocale: DEFAULT_LOCALE,
+    locales: LOCALES.split(','),
+    routing: {
+      prefixDefaultLocale: false,
+    },
   },
+  ...renderSpecific,
 });
-
-// SSR
-// import { defineConfig } from 'astro/config'
-// import { nodejs } from '@astrojs/node'
-
-// export default defineConfig({
-//   output: 'server', // 'server' or 'hybrid'
-//   adapter: nodejs()
-// })
