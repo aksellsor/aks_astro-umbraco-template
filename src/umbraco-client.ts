@@ -40,9 +40,9 @@ class UmbracoClient {
     } else {
       const response = await fetch(`${url}/data.json`);
       const dataObject = await response.json();
-      console.log(
-        Object.values(dataObject)?.map((item: any) => item?.route?.path)
-      );
+      // console.log(
+      //   Object.values(dataObject)?.map((item: any) => item?.route?.path)
+      // );
       let currentPage = Object.values(dataObject)?.find(
         (item: any) =>
           item?.route?.path === `${id === '/' ? '/' : `/${id}/`}` ||

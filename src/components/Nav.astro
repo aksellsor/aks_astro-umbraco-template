@@ -4,7 +4,7 @@
 	let LOCALES = import.meta.env.LOCALES?.split(",");
 	let SSR = import.meta.env.RENDER_MODE === "SSR";
 
-	let langPrefix = LOCALES?.filter(lang => lang === Astro.url.pathname.split("/")[1])
+	let langPrefix = LOCALES?.find(lang => lang === Astro.url.pathname.split("/")[1]);
 	// const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }});
 	let origin = new URL(Astro.url).origin;
 	let preview = Astro.url.searchParams.get("preview");
@@ -18,6 +18,7 @@
 	const { properties } = pageData || {};
 	let navMenu = properties?.navMenu;
 ---
+
 <nav class="nav">
 	<Logo />
 	<div class="menu">
