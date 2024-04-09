@@ -18,20 +18,17 @@ class UmbracoClient {
     // culture: string = '',
     { expand }: { expand?: Expand } = {}
   ) {
-    let error = null;
-    let data = null;
-    await fetch(`${this.deliveryApiUrl}/item/${id}${getExpandParam(expand)}`, {
-      method: 'GET',
-      headers: {
-        Preview: preview ? 'true' : 'false',
-        'Api-Key': 'b2radl-gr8skd-3fidjlw-ds8fj3-3dkfg6',
-        // 'Accept-Language': culture,
-      },
-    })
-      .then((r) => r.json())
-      .then((d) => (data = d))
-      .catch((errorMessage) => (error = errorMessage));
-    return data;
+    return await fetch(
+      `${this.deliveryApiUrl}/item/${id}${getExpandParam(expand)}`,
+      {
+        method: 'GET',
+        headers: {
+          Preview: preview ? 'true' : 'false',
+          'Api-Key': 'b2radl-gr8skd-3fidjlw-ds8fj3-3dkfg6',
+          // 'Accept-Language': culture,
+        },
+      }
+    );
   }
 
   async getContentFromJson(
@@ -62,19 +59,29 @@ class UmbracoClient {
     { expand }: { expand?: Expand } = {}
   ) {
     if (preview || GET_FROM_LOCAL_JSON === 'false' || RENDER_MODE === 'SSG') {
-      const data = await this.getContentFromUmbraco(url, id, preview, {
+      let data = null;
+      let err = null;
+      await this.getContentFromUmbraco(url, id, preview, {
         expand,
+      }).then((r) => {
+        if (r.status != 200) {
+          // Error
+          err = true;
+        } else {
+          data = r.json();
+        }
       });
+      if (err) {
+        await this.getContentFromJson(url, id).then((d) => {
+          data = d;
+        });
+      }
       return data;
     } else {
       let data = null;
-      await this.getContentFromJson(url, id)
-        .then((d) => (data = d))
-        .catch((err) => {
-          data = this.getContentFromUmbraco(url, id, preview, {
-            expand,
-          });
-        });
+      await this.getContentFromJson(url, id).then((d) => {
+        data = d;
+      });
       return data;
     }
   }
