@@ -51,7 +51,7 @@
 		<DEV/>
 		<CMDK currentId={id}/>
 		<Hotkeys client:load currentId={id}/>
-		<div class="page">
+		<div class="page container">
 			<Nav path={path} navMenu={properties?.navMenu}/>
 			<Cultures {cultures}/>
 
@@ -60,16 +60,23 @@
 			</main>
 
 			<DarkmodeToggle client:only/>
-			<div id="darkmode-status"></div>
 			<Footer/>
 		</div>
 
 	</body>
 </html>
+<script define:vars={{ preview }} is:inline>
+	window.addEventListener('beforeunload', (event) => {
+		if(preview) {
+			event.preventDefault();
+			event.returnValue = '';
+		}
+	});
+</script>
 <script>
     import { darkmode } from '../globalState';
 	darkmode.subscribe(dm => {
-		document.querySelector("#darkmode-status").innerHTML = dm;
+   		 document.body.classList.toggle("darkmode", JSON.parse(dm));
 	});
 </script>
 <!-- 
@@ -80,7 +87,14 @@
 
 <!-- PAGE LAYOUT -->
 <style>
-	.page{display:flex;flex-direction: column;justify-content: space-between;}
+	.page{
+		display:flex;flex-direction: column;justify-content: space-between;
+	}
+	.container {
+		margin: auto;
+		max-width: 1200px;
+		width: calc(100% - 2rem);
+	}
 	footer {
 		margin-top: auto;
 		padding:1rem 0;
@@ -96,23 +110,34 @@
 
 <!-- GLOBAL -->
 <style is:global>
-	body {color: white;}html {background: #13151a;}
+	body.darkmode {color: white;background: #13151a;}
+	*,
+	*::before,
+	*::after,
 	html {
-    	overflow: hidden;
-		font-family: system-ui, sans-serif;
+		box-sizing: border-box;
+	}
+	html {
+		font-size: 100%;
 	}
 	a {
 		color: inherit;
 		text-underline-offset: .3em;
 	}
+	::selection {
+		text-shadow: none;
+		color: #fff;
+		background-color: #00f;
+	}
 	body {
-		overflow-y: auto;
-		-webkit-overflow-scrolling:touch;
-		margin: auto;
-		max-width: 1200px;
-		width: calc(100% - 2rem);
-		font-size: 18px;
-  		overflow-anchor: none;
+		font-family: system-ui, sans-serif;
+		text-rendering: geometricPrecision | optimizeLegibility | optimizeSpeed;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	a, button {
+		touch-action: manipulation; /* Element doesn't want double-tap on mobile to zoom */
 	}
 	html,body,.page {height:100%;}
 </style>

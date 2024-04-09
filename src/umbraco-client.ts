@@ -4,10 +4,11 @@ const UMBRACO_ROOT_NODE = import.meta.env.UMBRACO_ROOT_NODE;
 const RENDER_MODE = import.meta.env.RENDER_MODE;
 const GET_FROM_LOCAL_JSON = import.meta.env.GET_FROM_LOCAL_JSON;
 const UMBRACO_URL = import.meta.env.UMBRACO_URL;
+const PREVIEW_API_KEY = import.meta.env.PREVIEW_API_KEY;
 let PUBLIC_DEFAULT_LOCALE = import.meta.env.PUBLIC_DEFAULT_LOCALE;
 let PUBLIC_LOCALES = import.meta.env.PUBLIC_LOCALES?.split(',');
 class UmbracoClient {
-  private deliveryApiPath = '/umbraco/delivery/api/v1/content';
+  private deliveryApiPath = '/umbraco/delivery/api/v2/content';
   private deliveryApiUrl: string;
 
   constructor(domain: string) {
@@ -16,7 +17,7 @@ class UmbracoClient {
 
   async getContentFromUmbraco(
     id: string,
-    preview: boolean = false,
+    preview: string = 'false',
     // culture: string = '',
     { expand }: { expand?: Expand } = {}
   ) {
@@ -25,8 +26,8 @@ class UmbracoClient {
       {
         method: 'GET',
         headers: {
-          Preview: preview ? 'true' : 'false',
-          'Api-Key': 'b2radl-gr8skd-3fidjlw-ds8fj3-3dkfg6',
+          Preview: preview,
+          'Api-Key': PREVIEW_API_KEY,
           // 'Accept-Language': culture,
         },
       }
@@ -148,6 +149,8 @@ class UmbracoClient {
     ).then((res) => res);
     return pageData;
   }
+  // GET ALL
+  // /umbraco/delivery/api/v1/content?fetch=descendants:9fd419ea-a998-4af9-9b76-f645ea535f78&expanded=all
 }
 
 export default new UmbracoClient(UMBRACO_URL);

@@ -1,6 +1,7 @@
 ---
 	// import {Image} from 'astro:assets';
-const logo = {url:"https://placeholder.pics/svg/150x100/323232/838383-3C3C3C/%5Blogo%5D", name:"logo"}
+let logo = {url:"https://placeholder.pics/svg/110x60/323232/838383-3C3C3C/%5Blogo%5D", name:"logo"}
+
 let logoSVG = fetch(logo.url)
     .then(res => res.text())
     .then(data => {
@@ -8,7 +9,6 @@ let logoSVG = fetch(logo.url)
     })
     .catch(error => console.error(error))
 ---
-
 <a href="/" class="logo" id="logo-clickable">
     <!-- <Image src={logo?.url} alt={logo?.name} inferSize /> -->
     <Fragment set:html={logoSVG} />
