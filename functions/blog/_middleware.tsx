@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const onRequest = vercelOGPagesPlugin<Props>({
-  imagePathSuffix: '/og.png',
+  imagePathSuffix: '/social-image.png',
   component: ({ ogTitle, pathname }) => {
     return <div style={{ display: 'flex' }}>{ogTitle}</div>;
   },
