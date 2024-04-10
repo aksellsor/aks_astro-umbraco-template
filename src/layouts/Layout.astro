@@ -57,7 +57,7 @@
 		<div transition:animate="fade" style="position:relative;z-index:9999;">
 			<Hotkeys client:load currentId={id} />
 			<DarkmodeToggle client:only transition:persist/>
-			<DEV seo={{siteName, title: seo.title || name, description: seo.description, }} />
+			<DEV seo={{ogImage, siteName, title: seo.title || name, description: seo.description, }} />
 			<CMDK currentId={id} />
 		</div>
 		<div class="page container">

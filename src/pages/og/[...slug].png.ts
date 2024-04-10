@@ -8,8 +8,8 @@
 //   );
 //   const fontData: ArrayBuffer = await fontFile.arrayBuffer();
 //   function getUrlParam(param) {
-//     const url = new URL(request.url); // Bruker window.location.href for å hente gjeldende side URL
-//     return url.searchParams.get(param); // Henter verdien av den angitte parameteren
+//     const url = new URL(request.url);
+//     return url.searchParams.get(param);
 //   }
 //   return await satoriAstroOG({
 //     template: html`<div
@@ -38,9 +38,3 @@
 //     },
 //   });
 // };
-
-import type { APIRoute } from 'astro';
-
-export const GET: APIRoute = async ({ params, request }) => {
-  return new Response('test');
-};
