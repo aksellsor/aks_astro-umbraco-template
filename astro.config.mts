@@ -17,7 +17,7 @@ let renderSpecific = {};
 if (RENDER_MODE === 'SSR') {
   renderSpecific = {
     output: 'server',
-    adapter: cloudflare(),
+    adapter: cloudflare({ mode: 'directory' }),
     //   {
     //   imageService: 'passthrough',
     // }
@@ -43,11 +43,6 @@ export default defineConfig({
   // },
   site: SITE,
   integrations: [react(), sitemap(), satoriAstro()],
-  vite: {
-    ssr: {
-      external: ['node:buffer'],
-    },
-  },
   i18n: {
     defaultLocale: PUBLIC_DEFAULT_LOCALE,
     locales: PUBLIC_LOCALES.split(','),
