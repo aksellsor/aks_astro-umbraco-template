@@ -12,4 +12,4 @@
 	const allRoutes = [page,...pages];
 	const {currentId} = Astro.props;
 ---
-{allRoutes && currentId && <CMDK client:only routes={allRoutes} currentId={currentId}/>}
+{allRoutes && currentId && <CMDK client:only="react" routes={allRoutes} currentId={currentId}/>}

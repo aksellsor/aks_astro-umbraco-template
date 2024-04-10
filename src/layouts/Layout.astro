@@ -28,9 +28,10 @@
 	const siteName = properties?.siteName;
 	const favicon = getUmbracoImage(properties?.favicon);
 	const canonicalUrl = Astro.url.toString();
-	const ogImage = `${new URL(Astro.url).origin}/og/${siteName}.png?description=${slugify(name)}`;
+	const ogImage = `https://fakeimg.pl/1200x630/d5d957/000?font=bebas&font_size=150&image_type=jpg&text=${name || siteName}`
 ---
 
+<!-- const ogImage = `${new URL(Astro.url).origin}/og/${siteName}.png?description=${slugify(name)}`; -->
 <html lang="en">
 	<head>
     	<ViewTransitions />
@@ -43,7 +44,7 @@
 			siteName={siteName}
 			title={seo.title || name}
 			description={seo.description}
-			image={seo.image?.url}
+			image={seo.image?.url || ogImage}
 			author={seo.author}
 			copyright={seo.copyright}
 			favicon={favicon?.url}
@@ -56,7 +57,7 @@
 	<body transition:animate="none">
 		<div transition:animate="fade" style="position:relative;z-index:9999;">
 			<Hotkeys client:load currentId={id} />
-			<DarkmodeToggle client:only transition:persist/>
+			<DarkmodeToggle client:only="react" transition:persist/>
 			<DEV seo={{ogImage, siteName, title: seo.title || name, description: seo.description, }} />
 			<CMDK currentId={id} />
 		</div>

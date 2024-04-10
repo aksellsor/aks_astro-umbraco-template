@@ -1,8 +1,8 @@
-import { defineConfig, passthroughImageService } from 'astro/config';
+import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import cloudflare from '@astrojs/cloudflare';
-import satoriAstro from 'satori-astro';
+// import satoriAstro from 'satori-astro';
 
 import { loadEnv } from 'vite';
 const {
@@ -18,12 +18,6 @@ if (RENDER_MODE === 'SSR') {
   renderSpecific = {
     output: 'server',
     adapter: cloudflare({ mode: 'directory' }),
-    //   {
-    //   imageService: 'passthrough',
-    // }
-    // image: {
-    //   service: passthroughImageService(),
-    // },
   };
 }
 // if (RENDER_MODE === 'SSG') {
@@ -42,7 +36,7 @@ export default defineConfig({
   //   defaultStrategy: 'hover', // 'tap'
   // },
   site: SITE,
-  integrations: [react(), sitemap(), satoriAstro()],
+  integrations: [react(), sitemap()],
   i18n: {
     defaultLocale: PUBLIC_DEFAULT_LOCALE,
     locales: PUBLIC_LOCALES.split(','),

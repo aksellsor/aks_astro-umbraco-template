@@ -15,13 +15,13 @@
     "@astrojs/cloudflare": "^10.0.3",
     "@astrojs/react": "^3.0.10",
     "@astrojs/sitemap": "^3.1.1",
-    "@cloudflare/pages-plugin-vercel-og": "^0.1.1",
     "@nanostores/persistent": "^0.10.1",
     "@nanostores/react": "^0.7.2",
     "@types/react": "^18.2.58",
     "@types/react-dom": "^18.2.19",
     "astro": "^4.4.4",
     "astro-seo-metadata": "^0.6.0",
+    "astro-service-worker": "^0.1.2",
     "nanostores": "^0.10.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -31,5 +31,8 @@
     "satori-html": "^0.3.2",
     "sonner": "^1.4.41",
     "vite": "^5.2.8"
+  },
+  "devDependencies": {
+    "wrangler": "^3.48.0"
   }
 }
