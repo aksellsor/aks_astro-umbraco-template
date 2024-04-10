@@ -4,7 +4,7 @@
 	const UMBRACO_ROOT_NODE = import.meta.env.UMBRACO_ROOT_NODE;
 	let currentSlug = Astro.params.slug || UMBRACO_ROOT_NODE;
 	let origin = new URL(Astro.url).origin;
-	let preview = Astro.url.searchParams.get("preview");
+	let preview = Astro.url.searchParams.get("preview") === 'true';
 	let culture = Astro.url.searchParams.get("culture");
 	const page = await client.getContentById(origin,currentSlug,preview,culture).then(res => res);
 	const pages = await client.getContentByType('page', { sort: { type: 'createDate', order: 'asc' }});

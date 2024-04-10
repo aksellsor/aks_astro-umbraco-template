@@ -1,10 +1,16 @@
 import { useStore } from '@nanostores/react';
 import { darkmode } from '../globalState';
 import "./DarkmodeToggle.css";
+import { useEffect } from 'react';
 
 const DarkmodeToggle = () => {
     // read the store value with the `useStore` hook
     const $darkmode = useStore(darkmode);
+
+    // useEffect(() => {
+    //     document.body.classList.toggle("darkmode", JSON.parse($darkmode));
+    // }, [$darkmode]);
+
 
     // write to the imported store using `.set`
     return (

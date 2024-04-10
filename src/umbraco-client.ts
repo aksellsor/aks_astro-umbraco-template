@@ -17,25 +17,28 @@ class UmbracoClient {
 
   async getContentFromUmbraco(
     id: string,
-    preview: any,
+    preview: boolean = false,
     culture: string = '',
     { expand }: { expand?: Expand } = {}
   ) {
+    let headers = {};
+    if (preview) {
+      headers.Preview = true;
+    }
+    if (culture?.length > 0) {
+      headers['Accept-Language'] = culture;
+    }
     return await fetch(
       `${this.deliveryApiUrl}/item/${id}${getExpandParam(expand)}`,
       {
         method: 'GET',
-        headers: {
-          Preview: preview ? true : false,
-          'Api-Key': PREVIEW_API_KEY,
-          'Accept-Language': culture,
-        },
+        headers,
       }
     );
   }
 
-  async getContentFromJson(url: string, id: string) {
-    const response = await fetch(`${url}/data.json`);
+  async getContentFromJson(origin: string, id: string) {
+    const response = await fetch(`${origin}/data.json`);
     const dataObject = await response.json();
     // console.log(
     //   Object.values(dataObject)?.map((item: any) => item?.route?.path)
@@ -49,7 +52,7 @@ class UmbracoClient {
   }
 
   async getContentById(
-    url: string,
+    origin: string,
     id: string,
     preview: boolean = false,
     culture: string = '',
@@ -69,14 +72,14 @@ class UmbracoClient {
         }
       });
       if (err) {
-        await this.getContentFromJson(url, id).then((d) => {
+        await this.getContentFromJson(origin, id).then((d) => {
           data = d;
         });
       }
       return data;
     } else {
       let data = null;
-      await this.getContentFromJson(url, id).then((d) => {
+      await this.getContentFromJson(origin, id).then((d) => {
         data = d;
       });
       return data;

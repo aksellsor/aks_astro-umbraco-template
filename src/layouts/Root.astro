@@ -1,7 +1,33 @@
 ---
+import {Image} from 'astro:assets'
+import { getUmbracoImage } from "../utils";
+import Crumbs from "../components/Crumbs.astro"
 const { props } = Astro.props;
+const img = getUmbracoImage(props?.properties?.featuredImage);
+const path = Astro.url.pathname;
 ---
+<Crumbs path={path} transition:name="crumbs"/>
 
 <h1>
     {props?.name}
 </h1>
+{img &&
+    <Image
+        src={img?.url+"?width=500&height=500"}
+        alt={img?.name}
+        width={500}
+        height={500}
+        transition:name="featuredimg"
+        transition:duration="50ms"
+        style="border-radius:1rem;overflow:hidden;"
+    />
+}
+        <!-- // format="webp"
+        // quality="80"
+        // width={1280}
+        // height={720}
+        // widths={[240,540,720,1280]}
+        // sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 1280px`}
+        // decoding="async"
+        // loading="lazy"
+        // style="max-width: 100%; aspect-ratio: 1280 / 720; height: auto;" -->

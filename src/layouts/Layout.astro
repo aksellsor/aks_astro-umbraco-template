@@ -8,50 +8,58 @@
 	import Footer from "../components/Footer.astro"
 	import Cultures from "../components/Cultures.astro";
 	import client from '../umbraco-client';
-
-	// SEO
-	const { name, path, id, cultures } = Astro.props;
-	const description = "This is a description placeholder for this website.";
-	const ogImage = { url:"https://placehold.co/1200x630" }
-	let UMBRACO_ROOT_NODE =  import.meta.env.UMBRACO_ROOT_NODE;
+	import { SEOMetadata } from 'astro-seo-metadata';
+	import { getUmbracoImage, slugify } from "../utils";
+	import { ViewTransitions,fade } from "astro:transitions"
 
 	// Global state
+	let UMBRACO_ROOT_NODE =  import.meta.env.UMBRACO_ROOT_NODE;
 	let currentSlug = Astro.params.slug || UMBRACO_ROOT_NODE;
 	let origin = new URL(Astro.url).origin;
-	let preview = Astro.url.searchParams.get("preview");
+	let preview = Astro.url.searchParams.get("preview") === 'true';
 	let culture = Astro.url.searchParams.get("culture");
-	const pageData = await client.getRootData(origin,currentSlug,culture).then(res => res);
-	const { properties } = pageData || {};
+	const rootData = await client.getRootData(origin,currentSlug,culture).then(res => res);
+	const { properties } = rootData || {};
+
+		// SEO
+	const SITE = import.meta.env.SITE;
+	const { seo = {},name, path, id, cultures } = Astro.props;
+
+	const siteName = properties?.siteName;
+	const favicon = getUmbracoImage(properties?.favicon);
+	const canonicalUrl = Astro.url.toString();
+	const ogImage = `${new URL(Astro.url).origin}/og/${siteName}.png?description=${slugify(name)}`;
 ---
 
 <html lang="en">
 	<head>
+    	<ViewTransitions />
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
   		<link rel="sitemap" href="/sitemap-index.xml" />
-		<!-- SEO -->
-		<title>{name}</title>
-		<meta name="description" content={description}>
-
-		<!-- Facebook Meta Tags -->
-		<meta property="og:type" content="website">
-		<meta property="og:title" content={name}>
-		<meta property="og:description" content={description}>
-		<meta property="og:image" content={ogImage?.url}>
-
-		<!-- Twitter Meta Tags -->
-		<meta name="twitter:card" content="summary_large_image">
-		<meta name="twitter:title" content={name}>
-		<meta name="twitter:description" content={description}>
-		<meta name="twitter:image" content={ogImage?.url}>
-
+		
+		  <SEOMetadata
+			siteName={siteName}
+			title={seo.title || name}
+			description={seo.description}
+			image={seo.image?.url}
+			author={seo.author}
+			copyright={seo.copyright}
+			favicon={favicon?.url}
+			astroSitemap={SITE ? true : false}
+			canonicalUrl={canonicalUrl}
+			type={'website'}
+			astroGenerator={true}
+		/>
 	</head>
-	<body >
-		<DEV/>
-		<CMDK currentId={id}/>
-		<Hotkeys client:load currentId={id}/>
+	<body transition:animate="none">
+		<div transition:animate="fade" style="position:relative;z-index:9999;">
+			<Hotkeys client:load currentId={id} />
+			<DarkmodeToggle client:only transition:persist/>
+			<DEV seo={{siteName, title: seo.title || name, description: seo.description, }} />
+			<CMDK currentId={id} />
+		</div>
 		<div class="page container">
 			<Nav path={path} navMenu={properties?.navMenu}/>
 			<Cultures {cultures}/>
@@ -60,31 +68,29 @@
 				<slot />
 			</main>
 
-			<DarkmodeToggle client:only/>
-			<Footer/>
+			<Footer />
 		</div>
-
 	</body>
 </html>
+<script>
+    import { darkmode } from '../globalState';
+	darkmode.subscribe(dm => {
+		document.body.classList.toggle("darkmode", JSON.parse(dm));
+	});
+	// Persist state on transition
+	document.addEventListener("astro:after-swap", () => {
+		document.body.classList.toggle("darkmode", localStorage.getItem("darkmode") === "true");
+	})
+</script>
 <script define:vars={{ preview }} is:inline>
-	window.addEventListener('beforeunload', (event) => {
+	document.addEventListener('beforeunload', (event) => {
 		if(preview) {
 			event.preventDefault();
 			event.returnValue = '';
 		}
 	});
 </script>
-<script>
-    import { darkmode } from '../globalState';
-	darkmode.subscribe(dm => {
-   		 document.body.classList.toggle("darkmode", JSON.parse(dm));
-	});
-</script>
-<!-- 
-<script define:vars={{ properties: properties}} type="module">
-	import { atom } from 'nanostores';
-	export const globalProps = atom(properties);
-</script> -->
+
 
 <!-- PAGE LAYOUT -->
 <style>

@@ -1,35 +1,46 @@
+import { defineConfig, passthroughImageService } from 'astro/config';
 import react from '@astrojs/react';
-import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import cloudflare from '@astrojs/cloudflare';
+import satoriAstro from 'satori-astro';
 
 import { loadEnv } from 'vite';
-const { RENDER_MODE, IMAGE_DOMAIN, PUBLIC_LOCALES, PUBLIC_DEFAULT_LOCALE } =
-  loadEnv(import.meta.env, process.cwd(), '');
+const {
+  RENDER_MODE,
+  // IMAGE_DOMAIN,
+  PUBLIC_LOCALES,
+  PUBLIC_DEFAULT_LOCALE,
+  SITE,
+} = loadEnv(import.meta.env, process.cwd(), '');
 
 let renderSpecific = {};
 if (RENDER_MODE === 'SSR') {
   renderSpecific = {
     output: 'server',
-    adapter: cloudflare(),
-  };
-}
-if (RENDER_MODE === 'SSG') {
-  renderSpecific = {
+    adapter: cloudflare({
+      imageService: 'passthrough',
+    }),
     image: {
-      domains: [`${IMAGE_DOMAIN}`, 'placehold.co'],
-      // service: {
-      //   entrypoint: 'src/imagesharp.ts',
-      // },
+      service: passthroughImageService(),
     },
   };
 }
+// if (RENDER_MODE === 'SSG') {
+//   renderSpecific = {
+//     image: {
+//       domains: [`${IMAGE_DOMAIN}`, 'placehold.co'],
+//       // service: {
+//       //   entrypoint: 'src/imagesharp.ts',
+//       // },
+//     },
+//   };
+// }
 export default defineConfig({
   prefetch: {
     defaultStrategy: 'hover', // 'tap'
   },
-  // site: 'https://aks-astro-webhooks.pages.dev/',
-  integrations: [react(), sitemap()],
+  site: SITE,
+  integrations: [react(), sitemap(), satoriAstro()],
   i18n: {
     defaultLocale: PUBLIC_DEFAULT_LOCALE,
     locales: PUBLIC_LOCALES.split(','),

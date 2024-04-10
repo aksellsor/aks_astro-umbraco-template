@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import client from '../umbraco-client';
 import Page from '../layouts/Page.astro';
 import Root from '../layouts/Root.astro';
+import { getUmbracoImage } from "../utils";
 
 const SSR = import.meta.env.RENDER_MODE === "SSR";
 let UMBRACO_ROOT_NODE =  import.meta.env.UMBRACO_ROOT_NODE;
@@ -48,19 +49,36 @@ let UMBRACO_ROOT_NODE =  import.meta.env.UMBRACO_ROOT_NODE;
 
 let currentSlug = Astro.params.slug || UMBRACO_ROOT_NODE;
 let origin = new URL(Astro.url).origin;
-let preview = Astro.url.searchParams.get("preview");
+let preview = Astro.url.searchParams.get("preview") === 'true';
 let culture = Astro.url.searchParams.get("culture");
 const pageData = SSR ? await client.getContentById(origin,currentSlug,preview,culture).then(res => res) : Astro.props;
-if (pageData?.status === 404) {
+if (!pageData) {
 	return new Response(null, {
 		status: 404,
 		statusText: 'Not found!',
 	});
 }
-const { contentType, name, route, id, cultures } = pageData || {};
+const { contentType, name, route, id, cultures, properties } = pageData || {};
+let SEOtitle = properties?.SEOtitle;
+let SEOdescription = properties?.SEOdescription;
+let SEOimage = getUmbracoImage(properties?.SEOimage,"?width=1200&height=630");
 ---
 
-<Layout {name} path={route?.path} {id} {cultures}>
+<Layout
+	{name}
+	path={route?.path}
+	{id}
+	{cultures}
+	seo={
+		{
+			title: SEOtitle | name,
+			description: SEOdescription,
+			image: SEOimage?.url
+			// author
+			// copyright
+		}
+	}
+>
 	{
 		() => {
 			switch(contentType) {

@@ -1,11 +1,19 @@
 ---
 	import "../dev/Hotkeys.css"
+    const {seo} = Astro.props;
 ---
 
 
 <aside class="dev-sidebar">
+<h3>SEO</h3>
+<table style="width:100%">
+    {seo.siteName && <tr><td>SEO Sitename</td><td>{seo.siteName}</td> </tr>}
+    {seo.title && <tr><td>SEO Title</td><td>{seo.title}</td> </tr>}
+    {seo.description && <tr><td>SEO Description</td><td>{seo.description}</td> </tr>}
+    {seo.ogImage && <tr><td>OG:image</td><td><img src={seo.ogImage} alt="" style="aspect-ratio: 1200 / 630;width:100%;max-width:300px;"/></td> </tr>}
+</table>
   <h4>Hotkeys</h4>
-  <table>
+  <table >
     <tr><td><kbd class="kbc-button">Alt</kbd> + <kbd class="kbc-button">Shift</kbd> + <kbd class="kbc-button">D</kbd></td><td>Open DEV sidebar</td> </tr>
     <tr><td><kbd class="kbc-button">CMD / CTRL</kbd> + <kbd class="kbc-button">K</kbd></td><td>open global search</td></tr>
     <tr><td><kbd class="kbc-button">Alt</kbd> + <kbd class="kbc-button">Shift</kbd> + <kbd class="kbc-button">U</kbd></td><td>to open Umbraco. <small>(<b>PUBLIC_UMBRACO_URL</b> from .env)</small></td></tr>
@@ -44,6 +52,7 @@
         left:1rem;
         height:max-content;
         max-height: 100dvh;
+        overflow-y: auto;
         border-radius: .5rem;
         right: auto;
         background-color: #343434;
