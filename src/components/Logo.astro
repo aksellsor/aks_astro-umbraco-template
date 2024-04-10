@@ -26,10 +26,15 @@ let logoSVG = fetch(logo.url)
   </li>
 </ul>
 <script>
+  import {copySvgObject} from "../utils";
+  const init = () => {
+  // Variables
   const clickable = document.getElementById('logo-clickable');
   const contextMenu = document.getElementById('menu');
+  const copyLogo = document.querySelector('#copyLogo');
 
-   clickable?.addEventListener("contextmenu", (e) => {
+  const onRightClickLogo = (e) => {
+
         e.preventDefault();
         const { clientX, clientY } = e;
         document.body.appendChild(contextMenu);
@@ -51,40 +56,31 @@ let logoSVG = fetch(logo.url)
           --left: ${positionX}px;`
         );
         contextMenu.classList.add('show');
-      });
-  // window.addEventListener("blur", () => contextMenu.classList.remove('show'));
-  document.addEventListener("click", () => contextMenu.classList.remove('show'));
-
-// copy to clipboard
-const copyLogo = document.querySelector('#copyLogo');
-async function copySvgObject(svgSelector) {
-  // Finn SVG-elementet
-  const svgElement = document.querySelector(svgSelector);
-  if (!svgElement) {
-    console.error('SVG was nout found');
-    return;
   }
+  const hideContextMenu = () => {
+    contextMenu.classList.remove('show');
+  }
+  const copySvg = () => copySvgObject('#logo-clickable svg');
 
-  // Serializer SVG til en streng
-  const serializer = new XMLSerializer();
-  const svgString = serializer.serializeToString(svgElement);
+  // Add event listeners
+   clickable?.addEventListener("contextmenu", onRightClickLogo);
+   document.addEventListener("click", hideContextMenu);
+   copyLogo?.addEventListener("click", copySvg);
 
-  // Opprett et midlertidig tekstområde for å kopiere strengen
-  const textarea = document.createElement('textarea');
-  textarea.value = svgString;
-  document.body.appendChild(textarea);
+   document.addEventListener('astro:before-swap', () => {
+    // SomeClass.destroy()
 
-  // Marker tekstområdet og kopier innholdet
-  textarea.select();
-  document.execCommand('copy');
+    // Remove event listeners
+    clickable?.removeEventListener("contextmenu", onRightClickLogo);
+    document.removeEventListener("click", hideContextMenu);
+    copyLogo?.removeEventListener("click", copySvg);
+  }, { once: true })
+  }
+  // Initialize on first load
+  init()
 
-  // Fjern tekstområdet fra DOM
-  document.body.removeChild(textarea);
-}
-copyLogo?.addEventListener("click", function(e) {
-	e.preventDefault();
-  copySvgObject('#logo-clickable svg');
-});
+  // Re-initialize after swapping pages
+  document.addEventListener("astro:after-swap", init)
 </script>
 
 <style>

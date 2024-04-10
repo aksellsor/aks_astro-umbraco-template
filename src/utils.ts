@@ -45,4 +45,36 @@ function slugify(str) {
     .replace(/[^\w\-]+/g, '') // Fjerner alle tegn som ikke er ordtegn eller bindestrek
     .replace(/\-\-+/g, '-'); // Erstatter flere bindestreker med en enkelt
 }
-export { getSortParam, getExpandParam, getUmbracoImage, slugify };
+
+async function copySvgObject(svgSelector) {
+  // Finn SVG-elementet
+  let svgElement = document.querySelector(svgSelector);
+  if (!svgElement) {
+    console.error('SVG was nout found');
+    return;
+  }
+
+  // Serializer SVG til en streng
+  const serializer = new XMLSerializer();
+  const svgString = serializer.serializeToString(svgElement);
+
+  // Opprett et midlertidig tekstområde for å kopiere strengen
+  const textarea = document.createElement('textarea');
+  textarea.value = svgString;
+  document.body.appendChild(textarea);
+
+  // Marker tekstområdet og kopier innholdet
+  textarea.select();
+  document.execCommand('copy');
+
+  // Fjern tekstområdet fra DOM
+  document.body.removeChild(textarea);
+}
+
+export {
+  getSortParam,
+  getExpandParam,
+  getUmbracoImage,
+  slugify,
+  copySvgObject,
+};
