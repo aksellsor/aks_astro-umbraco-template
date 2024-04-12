@@ -1,6 +1,11 @@
+## LIVE DEMO<br/>
+
+https://astro-template.aksell.dev/(https://astro-template.aksell.dev/)
+
 ## 🚀Steps
 
 1. Add [Cloudflare Adapter](https://docs.astro.build/en/guides/integrations-guide/cloudflare/) (IF SSR)
+
 ```
 npx astro add cloudflare
 ```

@@ -36,6 +36,7 @@ const RAW_RUNTIME_STATE =
           ["astro", "npm:4.5.16"],\
           ["astro-seo-metadata", "npm:0.6.0"],\
           ["astro-service-worker", "npm:0.1.2"],\
+          ["gsap", "npm:3.12.5"],\
           ["nanostores", "npm:0.10.3"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:18.2.0"],\
@@ -6309,6 +6310,7 @@ const RAW_RUNTIME_STATE =
           ["astro", "npm:4.5.16"],\
           ["astro-seo-metadata", "npm:0.6.0"],\
           ["astro-service-worker", "npm:0.1.2"],\
+          ["gsap", "npm:3.12.5"],\
           ["nanostores", "npm:0.10.3"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:d9650954c7f1725ea712d2e40695de9ea5d1c0fa9b89379134c62909d440d91b03d6c37e2823804a3404472b90a5bec73c82193190dd3c4db4c9e9edd75db91e#npm:18.2.0"],\
@@ -6615,6 +6617,15 @@ const RAW_RUNTIME_STATE =
           ["kind-of", "npm:6.0.3"],\
           ["section-matter", "npm:1.0.0"],\
           ["strip-bom-string", "npm:1.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["gsap", [\
+      ["npm:3.12.5", {\
+        "packageLocation": "../../.yarn/berry/cache/gsap-npm-3.12.5-5f40c203df-10c0.zip/node_modules/gsap/",\
+        "packageDependencies": [\
+          ["gsap", "npm:3.12.5"]\
         ],\
         "linkType": "HARD"\
       }]\

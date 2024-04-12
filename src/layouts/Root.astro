@@ -2,6 +2,7 @@
 import {Image} from 'astro:assets'
 import { getUmbracoImage } from "../utils";
 import Crumbs from "../components/Crumbs.astro"
+import Scroller from '../components/Scroller.astro';
 const { props } = Astro.props;
 const img = getUmbracoImage(props?.properties?.featuredImage);
 const path = Astro.url.pathname;
@@ -28,6 +29,8 @@ const path = Astro.url.pathname;
         // height={720}
         // widths={[240,540,720,1280]}
         // sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 1280px`}
-        // decoding="async"
+        // decoding="async"a
         // loading="lazy"
         // style="max-width: 100%; aspect-ratio: 1280 / 720; height: auto;" -->
+
+<Scroller/>

@@ -1,5 +1,5 @@
 ---
 const REDIR = import.meta.env.UMBRACO_URL;
 // If the user is not logged in, redirect them to the login page
-  return Astro.redirect(REDIR);
+  return Astro.redirect(REDIR + "/umbraco");
 ---
