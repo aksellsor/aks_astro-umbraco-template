@@ -7,7 +7,7 @@
 	<Logo />
 	<div class="menu">
 		{navMenu?.map(page => {
-			const { path } = page.route
+			const path = page?.url || page?.route?.url;
 			return (
 				<a
 					href={`${path}`}
